@@ -1,0 +1,200 @@
+{
+ "actions": [],
+ "autoname": "format:{STR}-{###}",
+ "creation": "2024-09-17 23:12:30.348000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "transfer_type",
+  "column_break_qxab",
+  "date",
+  "section_break_wwcx",
+  "from_share_member",
+  "column_break_tyfd",
+  "to_share_member",
+  "section_break_iram",
+  "equityliability_account",
+  "column_break_ozzl",
+  "asset_account",
+  "section_break_myfn",
+  "share_price_date",
+  "amount",
+  "column_break_mpub",
+  "rate",
+  "no_of_shares",
+  "section_break_bmse",
+  "company",
+  "column_break_bsgw",
+  "remarks",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "transfer_type",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Transfer Type",
+   "options": "\nIssue\nPurchase\nTransfer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_qxab",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_wwcx",
+   "fieldtype": "Section Break"
+  },
+  {
+   "depends_on": "eval:doc.transfer_type != 'Issue'",
+   "fieldname": "from_share_member",
+   "fieldtype": "Link",
+   "label": "From Share Member",
+   "mandatory_depends_on": "eval:doc.transfer_type != 'Issue'",
+   "options": "Share Members"
+  },
+  {
+   "fieldname": "column_break_tyfd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.transfer_type != 'Purchase'",
+   "fetch_from": "from_share_member.title",
+   "fieldname": "to_share_member",
+   "fieldtype": "Link",
+   "label": "To Share Member",
+   "mandatory_depends_on": "eval:doc.transfer_type != 'Purchase'",
+   "options": "Share Members"
+  },
+  {
+   "fieldname": "section_break_iram",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "equityliability_account",
+   "fieldtype": "Link",
+   "label": "Equity/Liability Account",
+   "link_filters": "[[\"Account\",\"account_type\",\"=\",\"Liability\"]]",
+   "options": "Account",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_ozzl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "asset_account",
+   "fieldtype": "Link",
+   "label": "Asset Account",
+   "link_filters": "[[\"Account\",\"account_type\",\"=\",\"Current Asset\"]]",
+   "options": "Account",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_myfn",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fetch_from": "share_price_date.share_price",
+   "fieldname": "rate",
+   "fieldtype": "Float",
+   "label": "Rate",
+   "options": "Share Price",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "no_of_shares",
+   "fieldtype": "Float",
+   "label": "No of Shares",
+   "precision": "2",
+   "read_only": 1
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Float",
+   "label": "Amount",
+   "precision": "2",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_bmse",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_bsgw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Data",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "share_price_date",
+   "fieldtype": "Link",
+   "label": "Share Price Date",
+   "options": "Share Price",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_mpub",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Share Transaction",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [
+  {
+   "link_doctype": "Share Price",
+   "link_fieldname": "share_price"
+  }
+ ],
+ "modified": "2024-09-22 17:00:12.167151",
+ "modified_by": "Administrator",
+ "module": "Share Managment",
+ "name": "Share Transaction",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

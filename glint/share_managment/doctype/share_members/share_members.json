@@ -1,0 +1,126 @@
+{
+ "actions": [],
+ "autoname": "format:{main_code} - {title}",
+ "creation": "2024-09-17 22:43:23.342566",
+ "default_view": "List",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "member_type",
+  "column_break_anea",
+  "main_member",
+  "section_break_odqi",
+  "main_code",
+  "column_break_nlbw",
+  "sub_code",
+  "column_break_krhn",
+  "member_code",
+  "column_break_fxyd",
+  "section_break_bvmy",
+  "title",
+  "column_break_bqul",
+  "company"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "label": "Title"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Company",
+   "options": "Company",
+   "reqd": 1
+  },
+  {
+   "fieldname": "member_type",
+   "fieldtype": "Select",
+   "label": "Member Type",
+   "options": "\nMain Member\nSub Member"
+  },
+  {
+   "depends_on": "eval:doc.member_type == 'Sub Member'",
+   "fieldname": "main_member",
+   "fieldtype": "Link",
+   "label": "Main Member",
+   "link_filters": "[[\"Share Members\",\"member_type\",\"=\",\"Main Member\"]]",
+   "mandatory_depends_on": "eval:doc.member_type == 'Sub Member'",
+   "options": "Share Members"
+  },
+  {
+   "fieldname": "section_break_bvmy",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_bqul",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_anea",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_odqi",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_nlbw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "GH",
+   "fieldname": "main_code",
+   "fieldtype": "Data",
+   "label": "Main Code"
+  },
+  {
+   "fieldname": "column_break_krhn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sub_code",
+   "fieldtype": "Data",
+   "label": "Sub Code"
+  },
+  {
+   "fieldname": "column_break_fxyd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "member_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Member Code",
+   "read_only": 1,
+   "unique": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-09-22 17:33:48.951989",
+ "modified_by": "Administrator",
+ "module": "Share Managment",
+ "name": "Share Members",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -4,4 +4,4 @@ Customise share management app
 
 #### License
 
-mit
+mit# glint
