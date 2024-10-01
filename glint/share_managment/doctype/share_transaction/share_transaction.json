@@ -66,7 +66,6 @@
   },
   {
    "depends_on": "eval:doc.transfer_type != 'Purchase'",
-   "fetch_from": "from_share_member.title",
    "fieldname": "to_share_member",
    "fieldtype": "Link",
    "label": "To Share Member",
@@ -81,7 +80,7 @@
    "fieldname": "equityliability_account",
    "fieldtype": "Link",
    "label": "Equity/Liability Account",
-   "link_filters": "[[\"Account\",\"account_type\",\"=\",\"Liability\"]]",
+   "link_filters": "[]",
    "options": "Account",
    "reqd": 1
   },
@@ -93,7 +92,7 @@
    "fieldname": "asset_account",
    "fieldtype": "Link",
    "label": "Asset Account",
-   "link_filters": "[[\"Account\",\"account_type\",\"=\",\"Current Asset\"]]",
+   "link_filters": "[]",
    "options": "Account",
    "reqd": 1
   },
@@ -174,7 +173,7 @@
    "link_fieldname": "share_price"
   }
  ],
- "modified": "2024-09-22 17:00:12.167151",
+ "modified": "2024-10-01 13:24:01.964325",
  "modified_by": "Administrator",
  "module": "Share Managment",
  "name": "Share Transaction",
