@@ -19,7 +19,9 @@
   "section_break_bvmy",
   "title",
   "column_break_bqul",
-  "company"
+  "company",
+  "section_break_xwye",
+  "share_member_record"
  ],
  "fields": [
   {
@@ -96,11 +98,21 @@
    "label": "Member Code",
    "read_only": 1,
    "unique": 1
+  },
+  {
+   "fieldname": "section_break_xwye",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "share_member_record",
+   "fieldtype": "Table",
+   "label": "Share Member Record",
+   "options": "Share Members Records"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-22 17:33:48.951989",
+ "modified": "2024-10-02 17:32:19.804175",
  "modified_by": "Administrator",
  "module": "Share Managment",
  "name": "Share Members",

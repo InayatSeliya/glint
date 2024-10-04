@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class ShareBalanceDetails(Document):
+class ShareMembersRecords(Document):
 	pass

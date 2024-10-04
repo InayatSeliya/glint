@@ -2,8 +2,9 @@
 # For license information, please see license.txt
 
 # import frappe
-from frappe.model.document import Document
 
 
-class SharePaymentEntry(Document):
-	pass
+def execute(filters=None):
+	columns, data = [], []
+	return columns, data
+
