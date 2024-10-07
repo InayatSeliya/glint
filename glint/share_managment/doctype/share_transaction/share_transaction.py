@@ -31,7 +31,26 @@ class ShareTransaction(Document):
         )
         share_members_doc.save()
 
+    def on_cancel(self):
+        # To detele entry from Member Shares
+        share_member_delete = frappe.get_doc("Share Members", self.to_share_member or self.from_share_member)
+
+        # Identify the matching details in Share Member Record to remove
+        for share_record in share_member_delete.share_member_record:
+            if (share_record.transfer_type == self.transfer_type and
+                share_record.no_of_share == self.no_of_shares and
+                share_record.amount == self.amount and
+                share_record.rate == self.rate):
+
+                # Delete Identified entry
+                share_member_delete.share_member_record.remove(share_record)
+                break
+            
+        # And save record
+        share_member_delete.save()
+
     def remove_shares(self, share_member):
+        # This function is created to remove share entry from Share Member's share_member_record if purchase or transfer is made in Share Transaction.
         """Removes shares from a Share Member's record."""
         share_members_doc = frappe.get_doc("Share Members", share_member)
 
@@ -52,9 +71,9 @@ class ShareTransaction(Document):
             "share_member_record",
             {
                 "transfer_type": self.transfer_type,
-                "no_of_share": -self.no_of_shares,  # Negative to show removal
+                "no_of_share": self.no_of_shares,  # Negative to show removal
                 "rate": self.rate,
-                "amount": -self.amount,
+                "amount": self.amount,
             },
         )
         share_members_doc.save()

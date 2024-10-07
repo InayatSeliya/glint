@@ -7,16 +7,24 @@ def execute(filters=None):
 	columns = [{
 		"fieldname": "share_member",
 		"label": "Share Member",
-		"fieldtype": "Data"
+		"fieldtype": "Data",
+		"width": "300"
 	}, {
 		"fieldname": "total_no_of_shares",
 		"label": "Total No. of Shares",
-		"fieldtype": "Float"
+		"fieldtype": "Float",
+		"width": "150"
+	}, {
+		"fieldname": "average_rate",
+		"label": "Average Rate",
+		"fieldtype": "Float",
+		"width": "150"
 	}, {
 		"fieldname": "total_amount",
 		"label": "Total Amount",
 		"fieldtype": "Currency",
-		"options": "INR"
+		"options": "INR",
+		"width": "150"
 	}]
 
 
@@ -29,8 +37,25 @@ def get_share_member_data():
 	share_member_data = frappe.db.sql("""
 		SELECT
 			sm.name AS share_member,
-			SUM(smr.no_of_share) As total_no_of_shares,
-			SUM(smr.amount) AS total_amount
+			-- Calculate total number of shares: (Sum of Issued Shares - Sum of Purchase Shares)
+			SUM(CASE WHEN smr.transfer_type = 'Issue' THEN smr.no_of_share ELSE 0 END) -
+			SUM(CASE WHEN smr.transfer_type = 'Purchase' THEN smr.no_of_share ELSE 0 END) AS total_no_of_shares,
+
+			-- Calculate total amount: (Sum of Issued Amount - Sum of Purchase Amount)
+			SUM(CASE WHEN smr.transfer_type = 'Issue' THEN smr.amount ELSE 0 END) - 
+			SUM(CASE WHEN smr.transfer_type = 'Purchase' THEN smr.amount ELSE 0 END) AS total_amount,
+
+			-- Calculate average rate
+			CASE
+				WHEN (SUM(CASE WHEN smr.transfer_type = 'Issue' THEN smr.no_of_share ELSE 0 END) - 
+						SUM(CASE WHEN smr.transfer_type = 'Purchase' THEN smr.no_of_share ELSE 0 END)) = 0
+				THEN 0
+				ELSE (SUM(CASE WHEN smr.transfer_type = 'Issue' THEN smr.amount ELSE 0 END) - 
+						SUM(CASE WHEN smr.transfer_type = 'Purchase' THEN smr.amount ELSE 0 END)) / 
+						(SUM(CASE WHEN smr.transfer_type = 'Issue' THEN smr.no_of_share ELSE 0 END) - 
+						SUM(CASE WHEN smr.transfer_type = 'Purchase' THEN smr.no_of_share ELSE 0 END))
+			END AS average_rate
+								   				   
 		FROM `tabShare Members` sm
 		LEFT JOIN `tabShare Members Records` smr ON sm.name = smr.parent
 		GROUP BY sm.name
@@ -40,18 +65,4 @@ def get_share_member_data():
 
 	
 
-	# data = frappe.get_all(
-	# 	"Share Transaction", 
-	# 	fields=["SUM(amount) AS total_amount", "SUM(no_of_shares) AS total_share", "to_share_member"], 
-	# 	filters={"docstatus": 1}, 
-	# 	group_by="to_share_member",
-	# )
-
-	# frappe.get_all(
-	# 	"Share Members", 
-	# 	fields=["SUM(amount) AS total_amount", "SUM(no_of_share) AS total_share", "name"], 
-	# 	filters={"docstatus": 1}, 
-	# 	group_by="name",
-	# )
-
-	# return columns, data
+	
