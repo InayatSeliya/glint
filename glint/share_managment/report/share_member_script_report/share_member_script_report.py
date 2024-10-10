@@ -8,7 +8,17 @@ def execute(filters=None):
 		"fieldname": "share_member",
 		"label": "Share Member",
 		"fieldtype": "Data",
-		"width": "300"
+		"width": "250"
+	}, {
+		"fieldname": "member_code",
+		"label": "Member Code",
+		"fieldtype": "Data",
+		"width": "125"
+	}, {
+		"fieldname": "member_type",
+		"label": "Member Type",
+		"fieldtype": "Data",
+		"width": "125"
 	}, {
 		"fieldname": "total_no_of_shares",
 		"label": "Total No. of Shares",
@@ -18,13 +28,13 @@ def execute(filters=None):
 		"fieldname": "average_rate",
 		"label": "Average Rate",
 		"fieldtype": "Float",
-		"width": "150"
+		"width": "125"
 	}, {
 		"fieldname": "total_amount",
 		"label": "Total Amount",
 		"fieldtype": "Currency",
 		"options": "INR",
-		"width": "150"
+		"width": "125"
 	}]
 
 
@@ -36,7 +46,9 @@ def get_share_member_data():
 
 	share_member_data = frappe.db.sql("""
 		SELECT
-			sm.name AS share_member,
+			sm.title AS share_member,
+			sm.member_code AS member_code,
+			sm.member_type,
 			-- Calculate total number of shares: (Sum of Issued Shares - Sum of Purchase Shares)
 			SUM(CASE WHEN smr.transfer_type = 'Issue' THEN smr.no_of_share ELSE 0 END) -
 			SUM(CASE WHEN smr.transfer_type = 'Purchase' THEN smr.no_of_share ELSE 0 END) AS total_no_of_shares,
