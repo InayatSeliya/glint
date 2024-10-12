@@ -1,6 +1,7 @@
 {
  "actions": [],
- "autoname": "format:{main_code} - {title}",
+ "allow_import": 1,
+ "autoname": "format:{main_code}-{sub_code} - {title}",
  "creation": "2024-09-17 22:43:23.342566",
  "default_view": "List",
  "doctype": "DocType",
@@ -27,7 +28,8 @@
   {
    "fieldname": "title",
    "fieldtype": "Data",
-   "label": "Title"
+   "label": "Title",
+   "reqd": 1
   },
   {
    "fieldname": "company",
@@ -41,7 +43,8 @@
    "fieldname": "member_type",
    "fieldtype": "Select",
    "label": "Member Type",
-   "options": "\nMain Member\nSub Member"
+   "options": "\nMain Member\nSub Member",
+   "reqd": 1
   },
   {
    "depends_on": "eval:doc.member_type == 'Sub Member'",
@@ -76,7 +79,8 @@
    "default": "GH",
    "fieldname": "main_code",
    "fieldtype": "Data",
-   "label": "Main Code"
+   "label": "Main Code",
+   "reqd": 1
   },
   {
    "fieldname": "column_break_krhn",
@@ -85,7 +89,8 @@
   {
    "fieldname": "sub_code",
    "fieldtype": "Data",
-   "label": "Sub Code"
+   "label": "Sub Code",
+   "reqd": 1
   },
   {
    "fieldname": "column_break_fxyd",
@@ -112,11 +117,12 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-02 17:32:19.804175",
+ "modified": "2024-10-11 17:38:57.820112",
  "modified_by": "Administrator",
  "module": "Share Managment",
  "name": "Share Members",
  "naming_rule": "Expression",
+ "nsm_parent_field": "parent_share_members",
  "owner": "Administrator",
  "permissions": [
   {

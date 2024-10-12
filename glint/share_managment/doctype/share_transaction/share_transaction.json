@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "autoname": "format:{STR}-{###}",
  "creation": "2024-09-17 23:12:30.348000",
  "doctype": "DocType",
@@ -80,7 +81,7 @@
    "fieldname": "equityliability_account",
    "fieldtype": "Link",
    "label": "Equity/Liability Account",
-   "link_filters": "[]",
+   "link_filters": "[[\"Account\",\"is_group\",\"=\",0]]",
    "options": "Account",
    "reqd": 1
   },
@@ -173,7 +174,7 @@
    "link_fieldname": "share_price"
   }
  ],
- "modified": "2024-10-01 13:24:01.964325",
+ "modified": "2024-10-11 17:17:07.456341",
  "modified_by": "Administrator",
  "module": "Share Managment",
  "name": "Share Transaction",

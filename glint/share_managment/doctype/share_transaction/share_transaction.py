@@ -5,35 +5,9 @@ import frappe
 from frappe.model.document import Document
 from frappe.utils import getdate
 
-@frappe.whitelist()
-def cancel_documents(names):
-        """
-        Cancel multiple Share Transaction documents in bulk.
-        """
-        names = frappe.parse_json(names)  # Parse the JSON list of document names
-        for name in names:
-            doc = frappe.get_doc("Share Transaction", name)  # Get each document
-            if doc.docstatus == 1:  # Only cancel if the document is in Submitted state
-                doc.cancel()
-
-@frappe.whitelist()
-def submit_documents(names):
-    """
-    Submit multiple Share Transaction documents in bulk.
-    """
-    # Parse the JSON list of document names
-    names = frappe.parse_json(names)
-    
-    # Iterate through each document name and submit it
-    for name in names:
-        doc = frappe.get_doc("Share Transaction", name)  # Get each document by name
-        
-        # Check if document is in Draft status before submitting
-        if doc.docstatus == 0:  # 0 = Draft, 1 = Submitted, 2 = Cancelled
-            doc.submit()
 
 class ShareTransaction(Document):
-    def validate(self):
+    def before_save(self):
         self.no_of_shares = self.amount / self.rate
         
     def on_submit(self):
@@ -47,6 +21,52 @@ class ShareTransaction(Document):
             self.remove_shares(self.from_share_member)
             # Add shares to the 'To Share Member'
             self.add_shares(self.to_share_member)
+        
+        # Create journal entry for the transaction
+        self.create_journal_entry()
+
+    def create_journal_entry(self):
+        """Create a draft Journal Entry based on the transaction details."""
+        accounts = []
+
+        # Determine debit and credit accounts based on transfer type
+        if self.transfer_type in ['Issue', 'Purchase']:
+            accounts.append({
+                'account': self.asset_account,  # Debit account
+                'debit_in_account_currency': self.amount,
+                'credit_in_account_currency': 0
+            })
+
+            accounts.append({
+                'account': self.equityliability_account,  # Credit account
+                'debit_in_account_currency': 0,
+                'credit_in_account_currency': self.amount
+            })
+        elif self.transfer_type == 'Transfer':
+            accounts.append({
+                'account': self.asset_account,  # Debit account
+                'debit_in_account_currency': self.amount,
+                'credit_in_account_currency': 0
+            })
+
+            accounts.append({
+                'account': self.equityliability_account,  # Credit account
+                'debit_in_account_currency': 0,
+                'credit_in_account_currency': self.amount
+            })
+
+        # Create a new Journal Entry
+        journal_entry = frappe.get_doc({
+            'doctype': 'Journal Entry',
+            'voucher_type': 'Journal Entry',
+            'posting_date': self.date,
+            'company': self.company,  # Ensure the company is set correctly
+            'accounts': accounts
+        })
+        journal_entry.insert()
+        frappe.msgprint(f"Journal Entry created successfully in draft mode: {journal_entry.name}")
+
+
 
     def add_shares(self, share_member):
         """Adds shares to a Share Member's record."""
@@ -142,3 +162,31 @@ class ShareTransaction(Document):
         )
         share_members_doc.save()
 
+
+@frappe.whitelist()
+def cancel_documents(names):
+        """
+        Cancel multiple Share Transaction documents in bulk.
+        """
+        names = frappe.parse_json(names)  # Parse the JSON list of document names
+        for name in names:
+            doc = frappe.get_doc("Share Transaction", name)  # Get each document
+            if doc.docstatus == 1:  # Only cancel if the document is in Submitted state
+                doc.cancel()
+
+@frappe.whitelist()
+def submit_documents(names):
+    """
+    Submit multiple Share Transaction documents in bulk.
+    """
+    # Parse the JSON list of document names
+    names = frappe.parse_json(names)
+    
+    # Iterate through each document name and submit it
+    for name in names:
+        doc = frappe.get_doc("Share Transaction", name)  # Get each document by name
+        
+        # Check if document is in Draft status before submitting
+        if doc.docstatus == 0:  # 0 = Draft, 1 = Submitted, 2 = Cancelled
+            doc.submit()
+            # doc.on_submit()  # Ensure journal entry is created during bulk submission
