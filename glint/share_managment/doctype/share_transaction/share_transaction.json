@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_import": 1,
- "autoname": "format:{STR}-{###}",
+ "autoname": "format:{ShTr}-{####}",
  "creation": "2024-09-17 23:12:30.348000",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -174,7 +174,7 @@
    "link_fieldname": "share_price"
   }
  ],
- "modified": "2024-10-11 17:17:07.456341",
+ "modified": "2024-10-12 16:17:15.859632",
  "modified_by": "Administrator",
  "module": "Share Managment",
  "name": "Share Transaction",
