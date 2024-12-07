@@ -9,6 +9,8 @@
   "transfer_type",
   "column_break_qxab",
   "date",
+  "column_break_gdlc",
+  "journal_entry",
   "section_break_wwcx",
   "from_share_member",
   "column_break_tyfd",
@@ -35,7 +37,7 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Transfer Type",
-   "options": "\nIssue\nPurchase\nTransfer",
+   "options": "\nIssue\nPurchase\nReinvest",
    "reqd": 1
   },
   {
@@ -54,11 +56,11 @@
    "fieldtype": "Section Break"
   },
   {
-   "depends_on": "eval:doc.transfer_type != 'Issue'",
+   "depends_on": "eval:doc.transfer_type != 'Issue' && doc.transfer_type != 'Reinvest'",
    "fieldname": "from_share_member",
    "fieldtype": "Link",
    "label": "From Share Member",
-   "mandatory_depends_on": "eval:doc.transfer_type != 'Issue'",
+   "mandatory_depends_on": "eval:doc.transfer_type != 'Issue' && doc.transfer_type != 'Reinvest'",
    "options": "Share Members"
   },
   {
@@ -74,6 +76,7 @@
    "options": "Share Members"
   },
   {
+   "depends_on": "eval:doc.transfer_type != 'Reinvest'",
    "fieldname": "section_break_iram",
    "fieldtype": "Section Break"
   },
@@ -82,6 +85,7 @@
    "fieldtype": "Link",
    "label": "Equity/Liability Account",
    "link_filters": "[[\"Account\",\"is_group\",\"=\",0]]",
+   "mandatory_depends_on": "eval:doc.transfer_type != 'Reinvest'",
    "options": "Account",
    "reqd": 1
   },
@@ -93,7 +97,8 @@
    "fieldname": "asset_account",
    "fieldtype": "Link",
    "label": "Asset Account",
-   "link_filters": "[]",
+   "link_filters": "[[\"Account\",\"is_group\",\"=\",0]]",
+   "mandatory_depends_on": "eval:doc.transfer_type != 'Reinvest'",
    "options": "Account",
    "reqd": 1
   },
@@ -164,6 +169,16 @@
    "print_hide": 1,
    "read_only": 1,
    "search_index": 1
+  },
+  {
+   "fieldname": "column_break_gdlc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "fieldname": "journal_entry",
+   "fieldtype": "Check",
+   "label": "Journal Entry"
   }
  ],
  "index_web_pages_for_search": 1,
@@ -174,7 +189,7 @@
    "link_fieldname": "share_price"
   }
  ],
- "modified": "2024-10-12 16:17:15.859632",
+ "modified": "2024-12-06 17:41:57.728735",
  "modified_by": "Administrator",
  "module": "Share Managment",
  "name": "Share Transaction",

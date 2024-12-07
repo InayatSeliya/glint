@@ -17,6 +17,7 @@
   "column_break_krhn",
   "member_code",
   "column_break_fxyd",
+  "share_member_account",
   "section_break_bvmy",
   "title",
   "column_break_bqul",
@@ -113,11 +114,18 @@
    "fieldtype": "Table",
    "label": "Share Member Record",
    "options": "Share Members Records"
+  },
+  {
+   "fieldname": "share_member_account",
+   "fieldtype": "Link",
+   "label": "Share Member Account",
+   "options": "Account",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-11 17:38:57.820112",
+ "modified": "2024-11-26 10:54:02.990090",
  "modified_by": "Administrator",
  "module": "Share Managment",
  "name": "Share Members",

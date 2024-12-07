@@ -1,80 +1,175 @@
 # Copyright (c) 2024, Inayatali Seliya and contributors
 # For license information, please see license.txt
 
+# import frappe
+# from frappe.model.document import Document
+
+
+# class ShareMembers(Document):
+# 	def validate(self):
+# 		# This will save Create Member Code data from Main Code and Sub Code
+# 		if self.main_code and self.sub_code:
+# 			self.member_code = f"{self.main_code}-{self.sub_code}"
+	
+# 	def before_save(self):
+# 		if self.get('member_type') == 'Main Member':
+# 			# it create Main member's group in COA
+# 			group_name = f"{self.get('main_code')}-{self.get('sub_code')} - {self.get('title')}"
+			
+# 			# This check it account already exists in COA
+# 			if not frappe.db.exists('Account', {'account_name': group_name, 'company': self.company}):
+# 				# It creates Main member's group in COA
+# 				account_group = frappe.get_doc({
+# 					'doctype': 'Account',
+# 					'account_name': group_name,
+# 					'parent_account': 'Shareholders Funds - GH',
+# 					'is_group': 1,
+# 					'company': self.company
+# 				})
+# 				account_group.insert()
+
+# 				# It create Main Member's self account in COA
+# 				main_member_child_account_name = f"{self.get('main_code')}-{self.get('sub_code')} - Self"
+				
+# 				if not frappe.db.exists('Account', {'account_name': main_member_child_account_name, 'company': self.company}):
+# 					main_member_child_account = frappe.get_doc({
+# 						'doctype': 'Account',
+# 						'account_name': f"{self.get('main_code')}-{self.get('sub_code')} - Self",
+# 						'parent_account': account_group.name,
+# 						'is_group': 0,
+# 						'company': self.company
+# 					})
+# 					main_member_child_account.insert()
+
+# 		elif self.get('member_type') == 'Sub Member':
+# 			# create Sub Member's account in COA under Parent Member Group account
+# 			main_member_account_group = frappe.get_value('Account', {'account_name': self.get('main_member'), 'company': self.company}, 'name')
+			
+# 			if main_member_account_group:
+# 				child_account_name = f"{self.get('main_code')}-{self.get('sub_code')} - {self.get('title')}"
+				
+# 				if not frappe.db.exists('Account', {'account_name': child_account_name, 'company': self.company}):
+# 					child_account = frappe.get_doc({
+# 						'doctype': 'Account',
+# 						'account_name': f"{self.get('main_code')}-{self.get('sub_code')} - {self.get('title')}",
+# 						'parent_account': main_member_account_group,
+# 						'is_group': 0,
+# 						'company': self.company
+# 					})
+# 					child_account.insert()
+				
 import frappe
 from frappe.model.document import Document
 
 
 class ShareMembers(Document):
-	def validate(self):
-		# This will save Create Member Code data from Main Code and Sub Code
-		if self.main_code and self.sub_code:
-			self.member_code = f"{self.main_code}-{self.sub_code}"
-	
-	def before_save(self):
-		if self.get('member_type') == 'Main Member':
-			# it create Main member's group in COA
-			group_name = f"{self.get('main_code')}-{self.get('sub_code')} - {self.get('title')}"
-			
-			# This check it account already exists in COA
-			if not frappe.db.exists('Account', {'account_name': group_name, 'company': self.company}):
-				# It creates Main member's group in COA
-				account_group = frappe.get_doc({
-					'doctype': 'Account',
-					'account_name': group_name,
-					'parent_account': 'Shareholders Funds - GH',
-					'is_group': 1,
-					'company': self.company
-				})
-				account_group.insert()
+    def validate(self):
+        # This will save Create Member Code data from Main Code and Sub Code
+        if self.main_code and self.sub_code:
+            self.member_code = f"{self.main_code}-{self.sub_code}"
+    
+    def before_save(self):
+        if self.get('member_type') == 'Main Member':
+            group_name = f"{self.get('main_code')}-{self.get('sub_code')} - {self.get('title')}"
+            if not frappe.db.exists('Account', {'account_name': group_name, 'company': self.company}):
+                account_group = frappe.get_doc({
+                    'doctype': 'Account',
+                    'account_name': group_name,
+                    'parent_account': 'Shareholders Funds - GH',
+                    'is_group': 1,
+                    'company': self.company
+                })
+                account_group.insert()
 
-				# It create Main Member's self account in COA
-				main_member_child_account_name = f"{self.get('main_code')}-{self.get('sub_code')} - Self"
-				
-				if not frappe.db.exists('Account', {'account_name': main_member_child_account_name, 'company': self.company}):
-					main_member_child_account = frappe.get_doc({
-						'doctype': 'Account',
-						'account_name': f"{self.get('main_code')}-{self.get('sub_code')} - Self",
-						'parent_account': account_group.name,
-						'is_group': 0,
-						'company': self.company
-					})
-					main_member_child_account.insert()
+            main_member_child_account_name = f"{self.get('main_code')}-{self.get('sub_code')} - Self"
+            if not frappe.db.exists('Account', {'account_name': main_member_child_account_name, 'company': self.company}):
+                main_member_child_account = frappe.get_doc({
+                    'doctype': 'Account',
+                    'account_name': main_member_child_account_name,
+                    'parent_account': account_group.name,
+                    'is_group': 0,
+                    'company': self.company
+                })
+                main_member_child_account.insert()
 
-		elif self.get('member_type') == 'Sub Member':
-			# create Sub Member's account in COA under Parent Member Group account
-			main_member_account_group = frappe.get_value('Account', {'account_name': self.get('main_member'), 'company': self.company}, 'name')
-			
-			if main_member_account_group:
-				child_account_name = f"{self.get('main_code')}-{self.get('sub_code')} - {self.get('title')}"
-				
-				if not frappe.db.exists('Account', {'account_name': child_account_name, 'company': self.company}):
-					child_account = frappe.get_doc({
-						'doctype': 'Account',
-						'account_name': f"{self.get('main_code')}-{self.get('sub_code')} - {self.get('title')}",
-						'parent_account': main_member_account_group,
-						'is_group': 0,
-						'company': self.company
-					})
-					child_account.insert()
-				
+        elif self.get('member_type') == 'Sub Member':
+            main_member_account_group = frappe.get_value('Account', {'account_name': self.get('main_member'), 'company': self.company}, 'name')
+            if main_member_account_group:
+                child_account_name = f"{self.get('main_code')}-{self.get('sub_code')} - {self.get('title')}"
+                if not frappe.db.exists('Account', {'account_name': child_account_name, 'company': self.company}):
+                    child_account = frappe.get_doc({
+                        'doctype': 'Account',
+                        'account_name': child_account_name,
+                        'parent_account': main_member_account_group,
+                        'is_group': 0,
+                        'company': self.company
+                    })
+                    child_account.insert()
 
+    def on_update(self):
+        if self.get('member_type') == 'Main Member':
+            self.share_member_account = frappe.get_value(
+                'Account',
+                {'account_name': f"{self.get('main_code')}-{self.get('sub_code')} - Self", 'company': self.company},
+                'name'
+            )
+        elif self.get('member_type') == 'Sub Member':
+            self.share_member_account = frappe.get_value(
+                'Account',
+                {'account_name': f"{self.get('main_code')}-{self.get('sub_code')} - {self.get('title')}", 'company': self.company},
+                'name'
+            )
+        frappe.db.set_value(self.doctype, self.name, 'share_member_account', self.share_member_account)
 
-	# To delete account from COA
-	# def on_trash(self):
-	# 	account_name = frappe.get_value('Account', {'account_name': self.get('title')}, 'name')
+    # def before_save(self):
+    #     if self.get('member_type') == 'Main Member':
+    #         # It create Main member's group in COA
+    #         group_name = f"{self.get('main_code')}-{self.get('sub_code')} - {self.get('title')}"
 
-	# 	if account_name:
-	# 		try:
-	# 			frappe.delete_doc('Account', account_name)
-	# 			frappe.db.commit()
-	# 			frappe.msgprint(f"Deleted COA account: {account_name}")
-	# 		except frappe.DoesNotExistError:
-	# 			frappe.msgprint(f"Account {account_name} does not exist.")
-	# 		except Exception as e:
-	# 			frappe.throw(f"Failed to delete COA account: {str(e)}")
-			
+    #         # This check it account already exists in COA
+    #         if not frappe.db.exists('Account', {'account_name': group_name, 'company': self.company}):
+    #             # It creates Main member's group in COA
+    #             account_group = frappe.get_doc({
+    #                 'doctype': 'Account',
+    #                 'account_name': group_name,
+    #                 'parent_account': 'Shareholders Funds - GH',
+    #                 'is_group': 1,
+    #                 'company': self.company
+    #             })
+    #             account_group.insert()
 
-		
+    #             # It create Main Member's self account in COA
+    #             main_member_child_account_name = f"{self.get('main_code')}-{self.get('sub_code')} - Self"
 
-	
+    #             if not frappe.db.exists('Account', {'account_name': main_member_child_account_name, 'company': self.company}):
+    #                 main_member_child_account = frappe.get_doc({
+    #                     'doctype': 'Account',
+    #                     'account_name': f"{self.get('main_code')}-{self.get('sub_code')} - Self",
+    #                     'parent_account': account_group.name,
+    #                     'is_group': 0,
+    #                     'company': self.company
+    #                 })
+    #                 main_member_child_account.insert()
+
+    #             # After account creation, set the share_member_account field
+    #             self.share_member_account = main_member_child_account.name
+
+    #     elif self.get('member_type') == 'Sub Member':
+    #         # create Sub Member's account in COA under Parent Member Group account
+    #         main_member_account_group = frappe.get_value('Account', {'account_name': self.get('main_member'), 'company': self.company}, 'name')
+
+    #         if main_member_account_group:
+    #             child_account_name = f"{self.get('main_code')}-{self.get('sub_code')} - {self.get('title')}"
+
+    #             if not frappe.db.exists('Account', {'account_name': child_account_name, 'company': self.company}):
+    #                 child_account = frappe.get_doc({
+    #                     'doctype': 'Account',
+    #                     'account_name': f"{self.get('main_code')}-{self.get('sub_code')} - {self.get('title')}",
+    #                     'parent_account': main_member_account_group,
+    #                     'is_group': 0,
+    #                     'company': self.company
+    #                 })
+    #                 child_account.insert()
+
+    #             # After account creation, set the share_member_account field
+    #             self.share_member_account = child_account.name

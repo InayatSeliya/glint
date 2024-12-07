@@ -1,0 +1,69 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-11-23 13:00:47.961597",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "share_member",
+  "total_shares",
+  "profit_amount",
+  "share_members_account",
+  "withdraw_profit",
+  "reinvest_profit"
+ ],
+ "fields": [
+  {
+   "fieldname": "share_member",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Share Member",
+   "options": "Share Members",
+   "reqd": 1
+  },
+  {
+   "fieldname": "total_shares",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Total Shares",
+   "reqd": 1
+  },
+  {
+   "fieldname": "profit_amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Profit Amount",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "withdraw_profit",
+   "fieldtype": "Check",
+   "label": "Withdraw Profit"
+  },
+  {
+   "default": "0",
+   "fieldname": "reinvest_profit",
+   "fieldtype": "Check",
+   "label": "Reinvest Profit"
+  },
+  {
+   "fieldname": "share_members_account",
+   "fieldtype": "Data",
+   "label": "Share Members Account"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-11-30 11:52:02.522678",
+ "modified_by": "Administrator",
+ "module": "Share Managment",
+ "name": "Profit Distribution Details",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

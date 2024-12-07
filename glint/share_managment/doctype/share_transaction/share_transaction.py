@@ -22,8 +22,9 @@ class ShareTransaction(Document):
             # Add shares to the 'To Share Member'
             self.add_shares(self.to_share_member)
         
-        # Create journal entry for the transaction
-        self.create_journal_entry()
+        # Create journal entry for the transaction only if the Journal Entry checkbox is ticked
+        if self.journal_entry:
+            self.create_journal_entry()
 
     def create_journal_entry(self):
         """Create a draft Journal Entry based on the transaction details."""

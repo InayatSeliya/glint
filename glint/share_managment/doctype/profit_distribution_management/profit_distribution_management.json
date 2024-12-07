@@ -1,0 +1,127 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-11-23 12:57:32.616294",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_xcfy",
+  "column_break_rrfc",
+  "column_break_zswy",
+  "date",
+  "column_break_cuzm",
+  "journal_entry",
+  "section_break_qkjx",
+  "total_profit",
+  "column_break_ftbc",
+  "total_no_of_shares",
+  "column_break_huhq",
+  "profit_per_share",
+  "profit_distribution_details_section",
+  "profit_distribution_details",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_xcfy",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_rrfc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_zswy",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "fieldname": "column_break_cuzm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_qkjx",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "total_profit",
+   "fieldtype": "Currency",
+   "label": "Total Profit"
+  },
+  {
+   "fieldname": "column_break_huhq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "profit_per_share",
+   "fieldtype": "Currency",
+   "label": "Profit Per Share"
+  },
+  {
+   "fieldname": "profit_distribution_details_section",
+   "fieldtype": "Section Break",
+   "label": "Profit Distribution Details"
+  },
+  {
+   "fieldname": "profit_distribution_details",
+   "fieldtype": "Table",
+   "label": "Profit Distribution Details",
+   "options": "Profit Distribution Details"
+  },
+  {
+   "fieldname": "column_break_ftbc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "total_no_of_shares",
+   "fieldtype": "Float",
+   "label": "Total No of Shares"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Profit Distribution Management",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "journal_entry",
+   "fieldtype": "Link",
+   "label": "Journal Entry",
+   "options": "Journal Entry"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-11-29 11:51:20.172558",
+ "modified_by": "Administrator",
+ "module": "Share Managment",
+ "name": "Profit Distribution Management",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
