@@ -20,8 +20,12 @@
   "share_member_account",
   "section_break_bvmy",
   "title",
-  "column_break_bqul",
+  "date_of_birth",
+  "mobile",
+  "nominee",
   "company",
+  "column_break_bqul",
+  "address",
   "section_break_xwye",
   "share_member_record"
  ],
@@ -29,7 +33,7 @@
   {
    "fieldname": "title",
    "fieldtype": "Data",
-   "label": "Title",
+   "label": "Title/Full Name",
    "reqd": 1
   },
   {
@@ -121,11 +125,31 @@
    "label": "Share Member Account",
    "options": "Account",
    "read_only": 1
+  },
+  {
+   "fieldname": "date_of_birth",
+   "fieldtype": "Date",
+   "label": "Date of Birth"
+  },
+  {
+   "fieldname": "mobile",
+   "fieldtype": "Phone",
+   "label": "Mobile"
+  },
+  {
+   "fieldname": "nominee",
+   "fieldtype": "Data",
+   "label": "Nominee"
+  },
+  {
+   "fieldname": "address",
+   "fieldtype": "Text",
+   "label": "Address"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-11-26 10:54:02.990090",
+ "modified": "2025-01-06 13:31:31.060046",
  "modified_by": "Administrator",
  "module": "Share Managment",
  "name": "Share Members",
