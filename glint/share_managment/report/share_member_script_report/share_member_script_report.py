@@ -49,22 +49,27 @@ def get_share_member_data():
 			sm.title AS share_member,
 			sm.member_code AS member_code,
 			sm.member_type,
-			-- Calculate total number of shares: (Sum of Issued Shares - Sum of Purchase Shares)
-			SUM(CASE WHEN smr.transfer_type = 'Issue' THEN smr.no_of_share ELSE 0 END) -
+			-- Calculate total number of shares: (Sum of Issued Shares + Sum of Reinvest Shares - Sum of Purchase Shares)
+			SUM(CASE WHEN smr.transfer_type = 'Issue' THEN smr.no_of_share ELSE 0 END) +
+			SUM(CASE WHEN smr.transfer_type = 'Reinvest' THEN smr.no_of_share ELSE 0 END) -
 			SUM(CASE WHEN smr.transfer_type = 'Purchase' THEN smr.no_of_share ELSE 0 END) AS total_no_of_shares,
 
-			-- Calculate total amount: (Sum of Issued Amount - Sum of Purchase Amount)
-			SUM(CASE WHEN smr.transfer_type = 'Issue' THEN smr.amount ELSE 0 END) - 
+			-- Calculate total amount: (Sum of Issued Amount + Sum of Reinvest Amount - Sum of Purchase Amount)
+			SUM(CASE WHEN smr.transfer_type = 'Issue' THEN smr.amount ELSE 0 END) +
+			SUM(CASE WHEN smr.transfer_type = 'Reinvest' THEN smr.amount ELSE 0 END) - 
 			SUM(CASE WHEN smr.transfer_type = 'Purchase' THEN smr.amount ELSE 0 END) AS total_amount,
 
 			-- Calculate average rate
 			CASE
-				WHEN (SUM(CASE WHEN smr.transfer_type = 'Issue' THEN smr.no_of_share ELSE 0 END) - 
+				WHEN (SUM(CASE WHEN smr.transfer_type = 'Issue' THEN smr.no_of_share ELSE 0 END) + 
+						SUM(CASE WHEN smr.transfer_type = 'Reinvest' THEN smr.no_of_share ELSE 0 END) -
 						SUM(CASE WHEN smr.transfer_type = 'Purchase' THEN smr.no_of_share ELSE 0 END)) = 0
 				THEN 0
-				ELSE (SUM(CASE WHEN smr.transfer_type = 'Issue' THEN smr.amount ELSE 0 END) - 
+				ELSE (SUM(CASE WHEN smr.transfer_type = 'Issue' THEN smr.amount ELSE 0 END) +
+						SUM(CASE WHEN smr.transfer_type = 'Reinvest' THEN smr.amount ELSE 0 END) - 
 						SUM(CASE WHEN smr.transfer_type = 'Purchase' THEN smr.amount ELSE 0 END)) / 
-						(SUM(CASE WHEN smr.transfer_type = 'Issue' THEN smr.no_of_share ELSE 0 END) - 
+						(SUM(CASE WHEN smr.transfer_type = 'Issue' THEN smr.no_of_share ELSE 0 END) +
+						SUM(CASE WHEN smr.transfer_type = 'Reinvest' THEN smr.no_of_share ELSE 0 END) - 
 						SUM(CASE WHEN smr.transfer_type = 'Purchase' THEN smr.no_of_share ELSE 0 END))
 			END AS average_rate
 								   				   

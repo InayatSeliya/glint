@@ -12,9 +12,12 @@ def execute(filters=None):
 	total_no_of_shares = 0
 	total_amount = 0
 
-	# Calculate total from Issue and deduct from Purchase
+	# Calculate total from Issue and Reinvest then deduct from Purchase
 	for row in data:
 		if row['transfer_type'] == 'Issue':
+			total_no_of_shares += row['no_of_share']
+			total_amount += row['amount']
+		elif row['transfer_type'] == 'Reinvest':
 			total_no_of_shares += row['no_of_share']
 			total_amount += row['amount']
 		elif row['transfer_type'] == 'Purchase':
@@ -85,6 +88,7 @@ def get_data(filters):
 		LEFT JOIN
 			`tabShare Transaction` st 
 			ON ((st.to_share_member = sm.name AND smr.transfer_type = 'Issue')
+			OR (st.to_share_member = sm.name AND smr.transfer_type = 'Reinvest')
 			OR (st.from_share_member = sm.name AND smr.transfer_type = 'Purchase'))
 			AND smr.date = st.date
 			AND smr.no_of_share = st.no_of_shares

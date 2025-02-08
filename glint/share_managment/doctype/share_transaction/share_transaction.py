@@ -9,6 +9,10 @@ from frappe.utils import getdate
 class ShareTransaction(Document):
     def before_save(self):
         self.no_of_shares = self.amount / self.rate
+
+        # Disable Journal Entry for Reinvest
+        if self.transfer_type == "Reinvest":
+            self.journal_entry = 0
         
     def on_submit(self):
     # Record entry as per transfer type
@@ -16,6 +20,8 @@ class ShareTransaction(Document):
             self.add_shares(self.to_share_member)
         elif self.transfer_type == "Purchase":
             self.remove_shares(self.from_share_member)
+        elif self.transfer_type == "Reinvest":
+            self.add_shares(self.to_share_member)
         elif self.transfer_type == "Transfer":
             # Remove shares from the 'From Share Member'
             self.remove_shares(self.from_share_member)
@@ -89,9 +95,9 @@ class ShareTransaction(Document):
 
     def on_cancel(self):
         # To delete entry from Share Member's record
-        if self.transfer_type in ["Issue", "Purchase"]:
+        if self.transfer_type in ["Issue", "Purchase", "Reinvest"]:
         # Determine the appropriate Share Member based on the transfer type
-            target_share_member = self.to_share_member if self.transfer_type == "Issue" else self.from_share_member
+            target_share_member = self.to_share_member if self.transfer_type in ["Issue", "Reinvest"] else self.from_share_member
         # Remove matching entries from Share Member's child table `share_member_record`
             self.remove_share_member_record(
                 share_member = target_share_member,
@@ -136,7 +142,7 @@ class ShareTransaction(Document):
             # 
             record_date = getdate(record.date)
             if record_date <= transaction_date:
-                if record.transfer_type in ["Issue", "Transfer"]:
+                if record.transfer_type in ["Issue", "Reinvest", "Transfer"]:
                     total_share += record.no_of_share
                 elif record.transfer_type == "Purchase":
                     total_share -= record.no_of_share

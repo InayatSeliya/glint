@@ -121,6 +121,40 @@ class ShareMembers(Document):
             )
         frappe.db.set_value(self.doctype, self.name, 'share_member_account', self.share_member_account)
 
+@frappe.whitelist()
+def get_share_member_data(doc):
+    # Fetch summary details
+    share_summary = frappe.db.sql("""
+        SELECT
+            SUM(CASE WHEN transfer_type = 'Issue' THEN no_of_share ELSE 0 END) AS total_issued,
+            SUM(CASE WHEN transfer_type = 'Issue' THEN amount ELSE 0 END) AS amount_issued,
+            SUM(CASE WHEN transfer_type = 'Purchase' THEN no_of_share ELSE 0 END) AS total_purchased,
+            SUM(CASE WHEN transfer_type = 'Purchase' THEN amount ELSE 0 END) AS amount_purchased,
+            SUM(CASE WHEN transfer_type = 'Reinvest' THEN no_of_share ELSE 0 END) AS total_reinvested,
+            SUM(CASE WHEN transfer_type = 'Reinvest' THEN amount ELSE 0 END) AS amount_reinvested
+        FROM `tabShare Members Records`
+        WHERE parent = %(member_code)s
+    """, {"member_code": doc.name}, as_dict=True)[0]
+    
+    # Fetch transaction ledger
+    transactions = frappe.db.sql("""
+        SELECT date, name AS share_transaction_id, transfer_type, rate, no_of_shares, amount
+        FROM `tabShare Transaction`
+        WHERE from_share_member = %(member_code)s
+        OR to_share_member = %(member_code)s
+        ORDER BY date
+    """, {"member_code": doc.name}, as_dict=True)
+    
+    # Attach these fields to doc
+    doc.total_issued = share_summary.get("total_issued", 0)
+    doc.amount_issued = share_summary.get("amount_issued", 0)
+    doc.total_purchased = share_summary.get("total_purchased", 0)
+    doc.amount_purchased = share_summary.get("amount_purchased", 0)
+    doc.total_reinvested = share_summary.get("total_reinvested", 0)
+    doc.amount_reinvested = share_summary.get("amount_reinvested", 0)
+    doc.transactions = transactions
+    return doc
+
     # def before_save(self):
     #     if self.get('member_type') == 'Main Member':
     #         # It create Main member's group in COA
