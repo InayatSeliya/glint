@@ -1,0 +1,137 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"L_yD4JMmv1\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Glint App</span>\",\"col\":12}},{\"id\":\"hOyQqyzIqN\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Share Members\",\"col\":3}},{\"id\":\"jS_bwIQG7a\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Share Transaction\",\"col\":3}},{\"id\":\"C4ew9VD6uP\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Share Price\",\"col\":3}},{\"id\":\"kL6LGRG6RG\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Profit Distribution Management\",\"col\":3}},{\"id\":\"uv3eIpf-T8\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"G6ne7uML2J\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Total Share and Amount Report \",\"col\":3}},{\"id\":\"QqW7E6k529\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Share Members Ledger Report\",\"col\":3}},{\"id\":\"EnhFU2KSCP\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Profit Distribution Report\",\"col\":3}},{\"id\":\"4Gi20L_huE\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Share Member Annual Report\",\"col\":3}},{\"id\":\"iYTtKVN3z0\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"3tzgT4eWTP\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"DocType\",\"col\":3}},{\"id\":\"VqlBJJeNRb\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Journal Entry\",\"col\":3}},{\"id\":\"gINfnq9Qmc\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"L3aKRCiRds\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Shareholder - Share Transder\",\"col\":3}},{\"id\":\"u6_NpPysQl\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Shareholder - Share Holder\",\"col\":3}},{\"id\":\"ljb0bI4d_a\",\"type\":\"paragraph\",\"data\":{\"text\":\"Reports\",\"col\":12}},{\"id\":\"7JmkOYoDzs\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Shareholder - Share Ledger\",\"col\":3}},{\"id\":\"p_ra_CBR_1\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Shareholder - Share Balance\",\"col\":3}}]",
+ "creation": "2024-09-17 23:25:02.829318",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "review",
+ "idx": 0,
+ "indicator_color": "",
+ "is_hidden": 0,
+ "label": "Share Management",
+ "links": [],
+ "modified": "2025-02-09 10:34:26.480140",
+ "modified_by": "Administrator",
+ "module": "Share Managment",
+ "name": "Share Management",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 1.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "DocType",
+   "link_to": "DocType",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Profit Distribution Report",
+   "link_to": "Profit Distribution Report",
+   "type": "Report"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Share Members Ledger Report",
+   "link_to": "Share Members Ledger Report",
+   "type": "Report"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Total Share and Amount Report ",
+   "link_to": "Share Member Script Report",
+   "type": "Report"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Shareholder - Share Balance",
+   "link_to": "Share Balance",
+   "type": "Report"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Shareholder - Share Transder",
+   "link_to": "Share Transfer",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Shareholder - Share Holder",
+   "link_to": "Shareholder",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Journal Entry",
+   "link_to": "Journal Entry",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Cyan",
+   "doc_view": "List",
+   "label": "Share Member Annual Report",
+   "link_to": "Share Member Profile Report",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Profit Distribution Management",
+   "link_to": "Profit Distribution Management",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Shareholder - Share Ledger",
+   "link_to": "Share Ledger",
+   "type": "Report"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Share Price",
+   "link_to": "Share Price",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Orange",
+   "doc_view": "List",
+   "label": "Share Members",
+   "link_to": "Share Members",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Pink",
+   "doc_view": "List",
+   "label": "Share Transaction",
+   "link_to": "Share Transaction",
+   "stats_filter": "[]",
+   "type": "DocType"
+  }
+ ],
+ "title": "Share Management"
+}

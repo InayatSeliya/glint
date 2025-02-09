@@ -5,6 +5,14 @@ app_description = "Customise share management app"
 app_email = "inayatseliya@gmail.com"
 app_license = "mit"
 
+fixtures = [
+    {
+        "dt": "Workspace",
+        "filters": [["module", "=", "Share Managment"]]
+    }
+]
+
+
 # Apps
 # ------------------
 
