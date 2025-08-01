@@ -1,68 +1,198 @@
 {
  "actions": [],
- "allow_rename": 1,
- "creation": "2024-11-23 13:00:47.961597",
+ "autoname": "format:{profit_declaration_date}",
+ "creation": "2025-04-21 17:11:50.989339",
  "doctype": "DocType",
- "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "share_member",
-  "total_shares",
-  "profit_amount",
-  "share_members_account",
-  "withdraw_profit",
-  "reinvest_profit"
+  "section_break_sbvo",
+  "profit_declaration_date",
+  "column_break_lfyi",
+  "start_date",
+  "column_break_kkkz",
+  "end_date",
+  "column_break_bnfo",
+  "no_of_months",
+  "section_break_pbfx",
+  "profit_account",
+  "column_break_uvrw",
+  "total_profit",
+  "column_break_wfrc",
+  "monthly_profit",
+  "section_break_bybb",
+  "column_break_vglu",
+  "column_break_ryor",
+  "reinvest_amount",
+  "column_break_xnvw",
+  "withdraw_amount",
+  "section_break_huec",
+  "profit_distribution_summary",
+  "memberwise_unit_tab",
+  "profit_distribution_monthly_units",
+  "amended_from"
  ],
  "fields": [
   {
-   "fieldname": "share_member",
+   "fieldname": "section_break_sbvo",
+   "fieldtype": "Section Break"
+  },
+  {
+   "description": "Accounting period start date",
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start Date"
+  },
+  {
+   "fieldname": "column_break_kkkz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Accounting period end date",
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "label": "End Date"
+  },
+  {
+   "fieldname": "section_break_pbfx",
+   "fieldtype": "Section Break"
+  },
+  {
+   "description": "Link Account from which profit must be distributed",
+   "fieldname": "profit_account",
    "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Share Member",
-   "options": "Share Members",
-   "reqd": 1
+   "label": "Profit Account",
+   "link_filters": "[[\"Account\",\"is_group\",\"=\",0],[\"Account\",\"account_type\",\"=\",\"Liability\"],[\"Account\",\"parent_account\",\"=\",\"Capital Account - GH\"]]",
+   "options": "Account",
+   "unique": 1
   },
   {
-   "fieldname": "total_shares",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Total Shares",
-   "reqd": 1
+   "fieldname": "column_break_uvrw",
+   "fieldtype": "Column Break"
   },
   {
-   "fieldname": "profit_amount",
+   "description": "Total profit to be distributed",
+   "fieldname": "total_profit",
    "fieldtype": "Currency",
-   "in_list_view": 1,
-   "label": "Profit Amount",
-   "reqd": 1
+   "label": "Total Profit",
+   "read_only": 1
   },
   {
-   "default": "0",
-   "fieldname": "withdraw_profit",
-   "fieldtype": "Check",
-   "label": "Withdraw Profit"
+   "description": "Months in accounting period",
+   "fieldname": "no_of_months",
+   "fieldtype": "Int",
+   "label": "No of Months",
+   "read_only": 1
   },
   {
-   "default": "0",
-   "fieldname": "reinvest_profit",
-   "fieldtype": "Check",
-   "label": "Reinvest Profit"
+   "fieldname": "column_break_wfrc",
+   "fieldtype": "Column Break"
   },
   {
-   "fieldname": "share_members_account",
-   "fieldtype": "Data",
-   "label": "Share Members Account"
+   "description": "Profit per month",
+   "fieldname": "monthly_profit",
+   "fieldtype": "Currency",
+   "label": "Monthly Profit",
+   "read_only": 1
+  },
+  {
+   "description": "1st day of new fiscal year",
+   "fieldname": "profit_declaration_date",
+   "fieldtype": "Date",
+   "label": "Profit Declaration Date"
+  },
+  {
+   "fieldname": "column_break_lfyi",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "memberwise_unit_tab",
+   "fieldtype": "Tab Break",
+   "label": "Memberwise Unit"
+  },
+  {
+   "fieldname": "profit_distribution_monthly_units",
+   "fieldtype": "Table",
+   "options": "Profit Distribution Monthly Units"
+  },
+  {
+   "fieldname": "section_break_huec",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "profit_distribution_summary",
+   "fieldtype": "Table",
+   "label": "Profit Distribution Summary",
+   "options": "Profit Distribution Summary"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Profit Distribution Details",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "column_break_bnfo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "description": "Total Amount to be reinvest",
+   "fieldname": "reinvest_amount",
+   "fieldtype": "Currency",
+   "label": "Reinvest Amount",
+   "read_only": 1
+  },
+  {
+   "description": "Total amount to be withdraw",
+   "fieldname": "withdraw_amount",
+   "fieldtype": "Currency",
+   "label": "Withdraw Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_bybb",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_ryor",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_xnvw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_vglu",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
- "istable": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2024-11-30 11:52:02.522678",
+ "modified": "2025-07-30 11:10:14.428363",
  "modified_by": "Administrator",
  "module": "Share Managment",
  "name": "Profit Distribution Details",
+ "naming_rule": "Expression",
  "owner": "Administrator",
- "permissions": [],
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []

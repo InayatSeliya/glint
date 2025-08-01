@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class ShareMemberSubRecords(Document):
+class ProfitDistributionMonthlyUnits(Document):
 	pass

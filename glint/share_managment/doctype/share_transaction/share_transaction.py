@@ -8,11 +8,12 @@ from frappe.utils import getdate
 
 class ShareTransaction(Document):
     def before_save(self):
-        self.no_of_shares = self.amount / self.rate
+        pass
+        # self.no_of_shares = self.amount / self.rate
 
         # Disable Journal Entry for Reinvest
-        if self.transfer_type == "Reinvest":
-            self.journal_entry = 0
+        # if self.transfer_type == "Reinvest":
+        #     self.journal_entry = 0
         
     def on_submit(self):
     # Record entry as per transfer type
@@ -85,7 +86,7 @@ class ShareTransaction(Document):
                 "date": self.date,
                 "transfer_type": self.transfer_type,
                 "no_of_share": self.no_of_shares,
-                "rate": self.rate,
+                # "rate": self.rate,
                 "amount": self.amount,
             },
         )
@@ -104,11 +105,11 @@ class ShareTransaction(Document):
                 transfer_type = self.transfer_type,
                 date = self.date,
                 no_of_share = self.no_of_shares,
-                rate = self.rate,
+                # rate = self.rate,
                 amount = self.amount
             )
 
-    def remove_share_member_record(self, share_member, transfer_type, no_of_share, rate, amount, date):
+    def remove_share_member_record(self, share_member, transfer_type, no_of_share, amount, date):
         # Fetch the Share Member document
         share_member_doc = frappe.get_doc("Share Members", share_member)
         # Identify matching records in the `share_member_record` child table
@@ -117,7 +118,7 @@ class ShareTransaction(Document):
             if record.transfer_type == transfer_type
             and record.date == date
             and record.no_of_share == no_of_share
-            and record.rate == rate
+            # and record.rate == rate
             and record.amount == amount
         ]
         # Remove all matching entries from the child table
@@ -163,7 +164,7 @@ class ShareTransaction(Document):
                 "date": self.date,
                 "transfer_type": self.transfer_type,
                 "no_of_share": self.no_of_shares,
-                "rate": self.rate,
+                # "rate": self.rate,
                 "amount": self.amount,
             },
         )
