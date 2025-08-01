@@ -1,0 +1,67 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-02-21 10:18:18.250320",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "month",
+  "share_price",
+  "amount_received",
+  "no_of_shares",
+  "cumulative_shares",
+  "monthly_goodwill",
+  "goodwill_price"
+ ],
+ "fields": [
+  {
+   "fieldname": "month",
+   "fieldtype": "Date",
+   "label": "Month"
+  },
+  {
+   "fieldname": "share_price",
+   "fieldtype": "Float",
+   "label": "Share Price"
+  },
+  {
+   "fieldname": "amount_received",
+   "fieldtype": "Float",
+   "label": "Amount Received"
+  },
+  {
+   "fieldname": "no_of_shares",
+   "fieldtype": "Float",
+   "label": "No of Shares",
+   "precision": "2"
+  },
+  {
+   "fieldname": "cumulative_shares",
+   "fieldtype": "Float",
+   "label": "Cumulative Shares"
+  },
+  {
+   "fieldname": "goodwill_price",
+   "fieldtype": "Currency",
+   "label": "Goodwill Price"
+  },
+  {
+   "fieldname": "monthly_goodwill",
+   "fieldtype": "Float",
+   "label": "Monthly Goodwill"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-02-25 12:15:37.509028",
+ "modified_by": "Administrator",
+ "module": "Share Managment",
+ "name": "Share Price Records",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

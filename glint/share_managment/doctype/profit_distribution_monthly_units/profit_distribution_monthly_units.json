@@ -1,0 +1,55 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-05-29 14:07:35.273899",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "share_member",
+  "month",
+  "units",
+  "holding_percent",
+  "profit_amount"
+ ],
+ "fields": [
+  {
+   "fieldname": "share_member",
+   "fieldtype": "Link",
+   "label": "Share Member",
+   "options": "Share Members"
+  },
+  {
+   "fieldname": "month",
+   "fieldtype": "Date",
+   "label": "Month"
+  },
+  {
+   "fieldname": "units",
+   "fieldtype": "Float",
+   "label": "Units"
+  },
+  {
+   "fieldname": "profit_amount",
+   "fieldtype": "Currency",
+   "label": "Profit Amount"
+  },
+  {
+   "fieldname": "holding_percent",
+   "fieldtype": "Float",
+   "label": "Holding %"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-07-30 10:42:44.749611",
+ "modified_by": "Administrator",
+ "module": "Share Managment",
+ "name": "Profit Distribution Monthly Units",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

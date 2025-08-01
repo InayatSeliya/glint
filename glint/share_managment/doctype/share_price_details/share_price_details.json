@@ -1,0 +1,111 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": ".FY.-.##",
+ "creation": "2025-02-21 10:17:42.008249",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_wsa2",
+  "start_date",
+  "goodwill_amount",
+  "initial_share_price",
+  "column_break_mjsg",
+  "end_date",
+  "goodwill_period_months",
+  "section_break_fhks",
+  "share_price_records",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_wsa2",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Start Date",
+   "reqd": 1
+  },
+  {
+   "description": "Auto fetch amount from Goodwill Account.",
+   "fieldname": "goodwill_amount",
+   "fieldtype": "Currency",
+   "label": "Goodwill Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_mjsg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "End Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "goodwill_period_months",
+   "fieldtype": "Int",
+   "label": "Goodwill Period Months",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_fhks",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "share_price_records",
+   "fieldtype": "Table",
+   "label": "Share Price Records",
+   "options": "Share Price Records"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Share Price Details",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "default": "100",
+   "description": "Used only for the first accounting period.",
+   "fieldname": "initial_share_price",
+   "fieldtype": "Float",
+   "label": "Initial Share Price"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-04-17 11:42:08.578730",
+ "modified_by": "Administrator",
+ "module": "Share Managment",
+ "name": "Share Price Details",
+ "naming_rule": "Expression (old style)",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
