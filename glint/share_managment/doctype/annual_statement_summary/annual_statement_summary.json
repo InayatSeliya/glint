@@ -1,0 +1,67 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-08-01 22:20:05.459795",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "share_member",
+  "total_investment",
+  "date",
+  "share_price",
+  "share_unit",
+  "share_value",
+  "profit"
+ ],
+ "fields": [
+  {
+   "fieldname": "share_member",
+   "fieldtype": "Link",
+   "label": "Share Member",
+   "options": "Share Members"
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "fieldname": "share_price",
+   "fieldtype": "Currency",
+   "label": "Share Price"
+  },
+  {
+   "fieldname": "share_unit",
+   "fieldtype": "Float",
+   "label": "Share Unit"
+  },
+  {
+   "fieldname": "share_value",
+   "fieldtype": "Currency",
+   "label": "Share Value"
+  },
+  {
+   "fieldname": "profit",
+   "fieldtype": "Currency",
+   "label": "Profit"
+  },
+  {
+   "fieldname": "total_investment",
+   "fieldtype": "Currency",
+   "label": "Total Investment"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-08-02 18:35:40.822356",
+ "modified_by": "Administrator",
+ "module": "Share Managment",
+ "name": "Annual Statement Summary",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

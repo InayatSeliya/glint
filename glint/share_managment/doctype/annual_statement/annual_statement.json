@@ -1,0 +1,164 @@
+{
+ "actions": [],
+ "creation": "2025-08-01 10:54:30.184388",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_ghyh",
+  "name1",
+  "column_break_xlmv",
+  "member_code",
+  "column_break_fjcn",
+  "member_type",
+  "section_break_f5je",
+  "share_member",
+  "column_break_nkmm",
+  "posting_date",
+  "column_break_ekzd",
+  "from_date",
+  "column_break_jaag",
+  "to_date",
+  "section_break_ngbh",
+  "share_member_summary",
+  "fy_profit_note",
+  "section_break_bqgj",
+  "annual_statement_transaction_details",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_f5je",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "share_member",
+   "fieldtype": "Link",
+   "label": "Share Member",
+   "link_filters": "[[\"Share Members\",\"member_type\",\"=\",\"Main Member\"]]",
+   "options": "Share Members",
+   "print_hide": 1
+  },
+  {
+   "fieldname": "column_break_ekzd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_jaag",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "from_date",
+   "fieldtype": "Date",
+   "label": "From Date"
+  },
+  {
+   "fieldname": "to_date",
+   "fieldtype": "Date",
+   "label": "To Date"
+  },
+  {
+   "fieldname": "section_break_ghyh",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fetch_from": "share_member.title",
+   "fieldname": "name1",
+   "fieldtype": "Data",
+   "label": "Name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_xlmv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "share_member.main_code",
+   "fieldname": "member_code",
+   "fieldtype": "Data",
+   "label": "Member Code",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_fjcn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "share_member.member_type",
+   "fieldname": "member_type",
+   "fieldtype": "Data",
+   "label": "Member Type",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_nkmm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "posting_date",
+   "fieldtype": "Date",
+   "label": "Posting Date"
+  },
+  {
+   "fieldname": "section_break_ngbh",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "share_member_summary",
+   "fieldtype": "Table",
+   "label": "Share Member Summary",
+   "options": "Annual Statement Summary"
+  },
+  {
+   "depends_on": "eval:doc.from_date && doc.to_date",
+   "fieldname": "fy_profit_note",
+   "fieldtype": "Read Only",
+   "label": "Profit Note"
+  },
+  {
+   "fieldname": "section_break_bqgj",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "annual_statement_transaction_details",
+   "fieldtype": "Table",
+   "label": "Annual Statement Transaction Details",
+   "options": "Annual Statement Transaction Details"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Annual Statement",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2025-08-03 23:38:25.600107",
+ "modified_by": "Administrator",
+ "module": "Share Managment",
+ "name": "Annual Statement",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -1,0 +1,97 @@
+<head>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+
+    * {
+      font-family: 'Ubuntu', sans-serif;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Ubuntu', sans-serif !important;
+    }
+  </style>
+</head>
+
+<h1 style="text-align: center;">Annual Statement</h1>
+
+<table style="width: 100%; border: none; border-collapse: collapse; margin-bottom: 10px;">
+  <tr>
+    <!-- Left Side -->
+    <td style="width: 60%; vertical-align: top;">
+      <div style="margin-bottom: 6px;"><strong>Member Name:</strong> {{ doc.name1 }}</div>
+      <div style="margin-bottom: 6px;"><strong>Member Code:</strong> {{ doc.member_code }}</div>
+      <div><strong>Member Type:</strong> {{ doc.member_type }}</div>
+    </td>
+
+    <!-- Right Side -->
+    <td style="width: 40%; vertical-align: top;">
+      <div style="font-weight: bold; color: black; margin-bottom: 6px;">Statement Period</div>
+      <div style="margin-bottom: 6px;"><strong>From:</strong> {{ frappe.utils.formatdate(doc.from_date, "dd-mm-yyyy") }}</div>
+      <div><strong>To:</strong> {{ frappe.utils.formatdate(doc.to_date, "dd-mm-yyyy") }}</div>
+    </td>
+  </tr>
+</table>
+
+<h4 style="margin-top: 20px;">Share Member Summary</h4>
+<table class="table table-bordered" style="width: 100%; font-size: 12px; table-layout: fixed;">
+    <thead>
+        <tr>
+            <th style="color: black; font-weight: bold; width: 30%;">Share Member</th>
+            <th style="color: black; font-weight: bold; width: 12%;">Total Investment</th>
+            <th style="color: black; font-weight: bold; width: 14%;">Date</th>
+            <th style="color: black; font-weight: bold; width: 8%;">Share Price</th>
+            <th style="color: black; font-weight: bold; width: 12%;">Share Unit</th>
+            <th style="color: black; font-weight: bold; width: 14%;">Share Value</th>
+            <th style="color: black; font-weight: bold; width: 10%;">Profit</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in doc.share_member_summary %}
+        <tr>
+            <!-- <td style="word-wrap: break-word;">{{ row.share_member }}</td> -->
+            <td style="word-wrap: break-word;">{{ row.share_member.split(' - ')[1] }}</td>
+            <td style="text-align: right;">{{ frappe.utils.fmt_money(row.total_investment, precision=2) }}</td>
+            <td>{{ frappe.utils.formatdate(row.date, "dd-mm-yyyy") }}</td>
+            <td style="text-align: right;">{{ frappe.utils.fmt_money(row.share_price, precision=2) }}</td>
+            <td style="text-align: right;">{{ frappe.utils.fmt_money(row.share_unit, precision=2) }}</td>
+            <td style="text-align: right;">{{ frappe.utils.fmt_money(row.share_value, precision=2) }}</td>
+            <td style="text-align: right;">{{ frappe.utils.fmt_money(row.profit, precision=2) }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if doc.fy_profit_note %}
+<p style="margin-top: 5px;"><em>{{ doc.fy_profit_note }}</em></p>
+{% endif %}
+
+<!-- Transaction Details -->
+<h4 style="margin-top: 30px;">Transaction Details</h4>
+<table class="table table-bordered" style="width: 100%; font-size: 12px;">
+    <thead>
+        <tr>
+            <th style="color: black; font-weight: bold;">Date</th>
+            <th style="color: black; font-weight: bold;">Share Member</th>
+            <th style="color: black; font-weight: bold;">Transaction Type</th>
+            <th style="color: black; font-weight: bold;">Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in doc.annual_statement_transaction_details %}
+        <tr>
+            <td>{{ frappe.utils.formatdate(row.date, "dd-mm-yyyy") }}</td>
+            <td>{{ row.share_member }}</td>
+            <td>{{ row.transaction_type }}</td>
+            <td style="text-align: right;">{{ frappe.utils.fmt_money(row.amount, precision=2) }}</td>
+            <!-- <td style="text-align: right;">{{ row.amount }}</td> -->
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Totals and Notes -->
+{% if doc.total_no_of_share or doc.total_amount %}
+<hr>
+<p><strong>Total Shares:</strong> {{ doc.total_no_of_share }} &nbsp;
+<strong>Total Amount:</strong> ₹{{ doc.total_amount }}</p>
+{% endif %}
