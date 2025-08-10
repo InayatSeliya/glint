@@ -16,7 +16,7 @@ fixtures = [
     {
         "dt": "Account",
         "filters": [
-            ["account_name", "in", ["Profit Declared"]]
+            ["account_name", "in", ["Profit Declared", "Goodwill"]]
         ]
     }
 ]
