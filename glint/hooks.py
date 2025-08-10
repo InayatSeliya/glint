@@ -9,6 +9,15 @@ fixtures = [
     {
         "dt": "Workspace",
         "filters": [["module", "=", "Share Managment"]]
+    },
+
+    # {"doctype": "Account"}
+
+    {
+        "dt": "Account",
+        "filters": [
+            ["account_name", "in", ["Profit Declared"]]
+        ]
     }
 ]
 

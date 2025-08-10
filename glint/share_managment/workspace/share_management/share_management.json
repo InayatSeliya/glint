@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"L_yD4JMmv1\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Glint App</span>\",\"col\":12}},{\"id\":\"hOyQqyzIqN\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Share Members\",\"col\":3}},{\"id\":\"jS_bwIQG7a\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Share Transaction\",\"col\":3}},{\"id\":\"4s208gixHW\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Share Price Details\",\"col\":3}},{\"id\":\"e4kZYBUQGQ\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Profit Distribution Details\",\"col\":3}},{\"id\":\"uv3eIpf-T8\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"ljb0bI4d_a\",\"type\":\"paragraph\",\"data\":{\"text\":\"Reports\",\"col\":12}},{\"id\":\"G6ne7uML2J\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Total Share and Amount Report \",\"col\":3}},{\"id\":\"QqW7E6k529\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Share Members Ledger Report\",\"col\":3}},{\"id\":\"dbr3aMUliL\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Member Annual Statement\",\"col\":3}},{\"id\":\"iYTtKVN3z0\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"yWOyX8VL13\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Balance Sheet\",\"col\":3}},{\"id\":\"ozY0FMCKri\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Profit and Loss\",\"col\":3}},{\"id\":\"gINfnq9Qmc\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"3tzgT4eWTP\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"DocType\",\"col\":3}},{\"id\":\"VqlBJJeNRb\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Journal Entry\",\"col\":3}}]",
+ "content": "[{\"id\":\"L_yD4JMmv1\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Glint App</span>\",\"col\":12}},{\"id\":\"hOyQqyzIqN\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Share Members\",\"col\":3}},{\"id\":\"jS_bwIQG7a\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Share Transaction\",\"col\":3}},{\"id\":\"4s208gixHW\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Share Price Details\",\"col\":3}},{\"id\":\"e4kZYBUQGQ\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Profit Distribution Details\",\"col\":3}},{\"id\":\"uv3eIpf-T8\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"ljb0bI4d_a\",\"type\":\"paragraph\",\"data\":{\"text\":\"Reports\",\"col\":12}},{\"id\":\"G6ne7uML2J\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Total Share and Amount Report \",\"col\":3}},{\"id\":\"QqW7E6k529\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Share Members Ledger Report\",\"col\":3}},{\"id\":\"dbr3aMUliL\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Member Annual Statement\",\"col\":3}},{\"id\":\"iYTtKVN3z0\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"yWOyX8VL13\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Balance Sheet\",\"col\":3}},{\"id\":\"ozY0FMCKri\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Profit and Loss\",\"col\":3}},{\"id\":\"gINfnq9Qmc\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"3tzgT4eWTP\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"DocType\",\"col\":3}},{\"id\":\"VqlBJJeNRb\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Journal Entry\",\"col\":3}},{\"id\":\"VcSSrmVzCz\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Year Closing Voucher\",\"col\":3}},{\"id\":\"ngmZ1dmu4K\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Chart of Account\",\"col\":3}}]",
  "creation": "2024-09-17 23:25:02.829318",
  "custom_blocks": [],
  "docstatus": 0,
@@ -13,7 +13,7 @@
  "is_hidden": 0,
  "label": "Share Management",
  "links": [],
- "modified": "2025-08-09 17:20:18.252204",
+ "modified": "2025-08-10 14:35:53.238146",
  "modified_by": "Administrator",
  "module": "Share Managment",
  "name": "Share Management",
@@ -30,6 +30,22 @@
    "doc_view": "List",
    "label": "DocType",
    "link_to": "DocType",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Year Closing Voucher",
+   "link_to": "Period Closing Voucher",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "Tree",
+   "label": "Chart of Account",
+   "link_to": "Account",
    "stats_filter": "[]",
    "type": "DocType"
   },
