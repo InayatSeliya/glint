@@ -102,7 +102,7 @@ class ShareTransaction(Document):
         # Remove matching entries from Share Member's child table `share_member_record`
             self.remove_share_member_record(
                 share_member = target_share_member,
-                transfer_type = self.trafer_type,
+                transfer_type = self.transfer_type,
                 date = self.date,
                 # no_of_share = self.no_of_shares,
                 # rate = self.rate,
