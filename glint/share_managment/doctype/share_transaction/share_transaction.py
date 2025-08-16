@@ -20,14 +20,14 @@ class ShareTransaction(Document):
         if self.transfer_type == "Issue":
             self.add_shares(self.to_share_member)
         elif self.transfer_type == "Purchase":
-            self.remove_shares(self.from_share_member)
+            self.add_shares(self.from_share_member)
         elif self.transfer_type == "Reinvest":
             self.add_shares(self.to_share_member)
-        elif self.transfer_type == "Transfer":
-            # Remove shares from the 'From Share Member'
-            self.remove_shares(self.from_share_member)
-            # Add shares to the 'To Share Member'
-            self.add_shares(self.to_share_member)
+        # elif self.transfer_type == "Transfer":
+        #     # Remove shares from the 'From Share Member'
+        #     self.remove_shares(self.from_share_member)
+        #     # Add shares to the 'To Share Member'
+        #     self.add_shares(self.to_share_member)
         
         # Create journal entry for the transaction only if the Journal Entry checkbox is ticked
         if self.journal_entry:
@@ -85,7 +85,7 @@ class ShareTransaction(Document):
             {
                 "date": self.date,
                 "transfer_type": self.transfer_type,
-                "no_of_share": self.no_of_shares,
+                # "no_of_share": self.no_of_shares,
                 # "rate": self.rate,
                 "amount": self.amount,
             },
@@ -102,14 +102,14 @@ class ShareTransaction(Document):
         # Remove matching entries from Share Member's child table `share_member_record`
             self.remove_share_member_record(
                 share_member = target_share_member,
-                transfer_type = self.transfer_type,
+                transfer_type = self.trafer_type,
                 date = self.date,
-                no_of_share = self.no_of_shares,
+                # no_of_share = self.no_of_shares,
                 # rate = self.rate,
                 amount = self.amount
             )
 
-    def remove_share_member_record(self, share_member, transfer_type, no_of_share, amount, date):
+    def remove_share_member_record(self, share_member, transfer_type, amount, date):
         # Fetch the Share Member document
         share_member_doc = frappe.get_doc("Share Members", share_member)
         # Identify matching records in the `share_member_record` child table
@@ -117,7 +117,7 @@ class ShareTransaction(Document):
             record for record in share_member_doc.share_member_record
             if record.transfer_type == transfer_type
             and record.date == date
-            and record.no_of_share == no_of_share
+            # and record.no_of_share == no_of_share
             # and record.rate == rate
             and record.amount == amount
         ]
@@ -134,28 +134,28 @@ class ShareTransaction(Document):
         """Removes shares from a Share Member's record."""
         share_members_doc = frappe.get_doc("Share Members", share_member)
         
-        # Convert self.date to datetime format
-        transaction_date = getdate(self.date)
+        # # Convert self.date to datetime format
+        # transaction_date = getdate(self.date)
         
-        # Calculate total shares held by the member on or before current date
-        total_share = 0
-        for record in share_members_doc.share_member_record:
-            # 
-            record_date = getdate(record.date)
-            if record_date <= transaction_date:
-                if record.transfer_type in ["Issue", "Reinvest", "Transfer"]:
-                    total_share += record.no_of_share
-                elif record.transfer_type == "Purchase":
-                    total_share -= record.no_of_share
+        # # Calculate total shares held by the member on or before current date
+        # total_share = 0
+        # for record in share_members_doc.share_member_record:
+        #     # 
+        #     record_date = getdate(record.date)
+        #     if record_date <= transaction_date:
+        #         if record.transfer_type in ["Issue", "Reinvest", "Transfer"]:
+        #             total_share += record.no_of_share
+        #         elif record.transfer_type == "Purchase":
+        #             total_share -= record.no_of_share
 
-        # Check if shares to be removed exceed the total shares held
-        if total_share < self.no_of_shares:
-            # Convert No. of Shares in 2 decimal place only for error message.
-            total_share_round = round(total_share, 2)
+        # # Check if shares to be removed exceed the total shares held
+        # if total_share < self.no_of_shares:
+        #     # Convert No. of Shares in 2 decimal place only for error message.
+        #     total_share_round = round(total_share, 2)
 
-            # Convert date format from YYYY-MM-DD to DD-MM-YYYY for error message only.
-            formatted_date = transaction_date.strftime("%d-%m-%Y")
-            frappe.throw(f"Insufficient shares. Share Member has only {total_share_round} shares up to {formatted_date}.")
+        #     # Convert date format from YYYY-MM-DD to DD-MM-YYYY for error message only.
+        #     formatted_date = transaction_date.strftime("%d-%m-%Y")
+        #     frappe.throw(f"Insufficient shares. Share Member has only {total_share_round} shares up to {formatted_date}.")
 
         # Append a record indicating the share removal (Purchase)
         share_members_doc.append(
@@ -163,7 +163,7 @@ class ShareTransaction(Document):
             {
                 "date": self.date,
                 "transfer_type": self.transfer_type,
-                "no_of_share": self.no_of_shares,
+                # "no_of_share": self.no_of_shares,
                 # "rate": self.rate,
                 "amount": self.amount,
             },

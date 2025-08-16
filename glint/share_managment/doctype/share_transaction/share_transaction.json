@@ -22,12 +22,10 @@
   "section_break_myfn",
   "amount",
   "column_break_mpub",
-  "no_of_shares",
   "section_break_bmse",
   "company",
   "column_break_bsgw",
-  "remarks",
-  "amended_from"
+  "remarks"
  ],
  "fields": [
   {
@@ -101,13 +99,6 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "no_of_shares",
-   "fieldtype": "Float",
-   "label": "No of Shares",
-   "precision": "2",
-   "read_only": 1
-  },
-  {
    "fieldname": "amount",
    "fieldtype": "Float",
    "label": "Amount",
@@ -147,22 +138,12 @@
    "fieldname": "journal_entry",
    "fieldtype": "Check",
    "label": "Journal Entry"
-  },
-  {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Share Transaction",
-   "print_hide": 1,
-   "read_only": 1,
-   "search_index": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-05-31 07:47:26.634100",
+ "modified": "2025-08-16 14:50:15.553876",
  "modified_by": "Administrator",
  "module": "Share Managment",
  "name": "Share Transaction",
