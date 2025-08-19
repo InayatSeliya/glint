@@ -62,8 +62,7 @@
    "fieldtype": "Link",
    "label": "Profit Account",
    "link_filters": "[[\"Account\",\"is_group\",\"=\",0],[\"Account\",\"account_type\",\"=\",\"Liability\"],[\"Account\",\"parent_account\",\"=\",\"Current Liabilities - GH\"]]",
-   "options": "Account",
-   "unique": 1
+   "options": "Account"
   },
   {
    "fieldname": "column_break_uvrw",
@@ -172,7 +171,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-08-10 14:38:44.002797",
+ "modified": "2025-08-19 18:05:56.983462",
  "modified_by": "Administrator",
  "module": "Share Managment",
  "name": "Profit Distribution Details",
