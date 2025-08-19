@@ -30,9 +30,25 @@ class ProfitDistributionDetails(Document):
         if not self.profit_account:
             frappe.throw(_("Profit Account must be selected."))
 
+    # def set_total_profit(self):
+    #     gl_entry = frappe.db.sql("""
+    #         SELECT SUM(credit) AS total_credit
+    #         FROM `tabGL Entry`
+    #         WHERE posting_date <= %s
+    #         AND account = %s
+    #         AND is_cancelled = 0
+    #     """, (self.profit_declaration_date, self.profit_account), as_dict=True)
+
+    #     total_credit = gl_entry[0].total_credit if gl_entry and gl_entry[0].total_credit else 0
+    #     if total_credit <= 0:
+    #         frappe.throw(_("No credited profit found in the selected account up to the declaration date."))
+    #     self.total_profit = total_credit
+
     def set_total_profit(self):
         gl_entry = frappe.db.sql("""
-            SELECT SUM(credit) AS total_credit
+            SELECT 
+                SUM(credit) AS total_credit,
+                SUM(debit) AS total_debit
             FROM `tabGL Entry`
             WHERE posting_date <= %s
             AND account = %s
@@ -40,9 +56,14 @@ class ProfitDistributionDetails(Document):
         """, (self.profit_declaration_date, self.profit_account), as_dict=True)
 
         total_credit = gl_entry[0].total_credit if gl_entry and gl_entry[0].total_credit else 0
-        if total_credit <= 0:
-            frappe.throw(_("No credited profit found in the selected account up to the declaration date."))
-        self.total_profit = total_credit
+        total_debit = gl_entry[0].total_debit if gl_entry and gl_entry[0].total_debit else 0
+        
+        net_profit = total_credit - total_debit
+        
+        if net_profit <= 0:
+            frappe.throw(_("No net profit found in the selected account up to the declaration date."))
+        
+        self.total_profit = net_profit
 
     def set_no_of_months(self):
         if self.start_date and self.end_date:
