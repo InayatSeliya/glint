@@ -81,6 +81,34 @@ class ProfitDistributionDetails(Document):
         end = frappe.utils.getdate(end_date)
         return (end.year - start.year) * 12 + (end.month - start.month) + 1
 
+    def get_previous_units(self, member):
+        """Get member's units from the last profit distribution record"""
+        last_distribution = frappe.get_all(
+            "Profit Distribution Details",
+            filters={
+                "docstatus": 1,  # Get only submitted documents
+                "end_date": ("<", self.start_date)  # Get records before current period
+            },
+            order_by="end_date DESC",
+            limit=1
+        )
+
+        if not last_distribution:
+            return 0
+
+        last_units = frappe.get_all(
+            "Profit Distribution Monthly Units",
+            filters={
+                "parent": last_distribution[0].name,
+                "share_member": member
+            },
+            fields=["units"],
+            order_by="month DESC",
+            limit=1
+        )
+
+        return last_units[0].units if last_units else 0
+
     def before_save(self):
         if not self.start_date or not self.end_date or not self.monthly_profit or not self.no_of_months:
             return
@@ -98,7 +126,8 @@ class ProfitDistributionDetails(Document):
         end_month = get_first_day(self.end_date)
         current_month = get_first_day(self.start_date)
 
-        member_units = {m.name: 0 for m in members}
+        # member_units = {m.name: 0 for m in members}
+        member_units = {m.name: self.get_previous_units(m.name) for m in members}
 
         while current_month <= end_month:
             share_price = frappe.db.get_value("Share Price Records", {"month": current_month}, "share_price")
