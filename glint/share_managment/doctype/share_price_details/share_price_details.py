@@ -48,7 +48,7 @@ class SharePriceDetails(Document):
                     "month": month_date,
                     "monthly_goodwill": monthly_goodwill,
                     "share_price": last_share_price if last_share_price else None,
-                    "amount_received": self.get_amount_received(month_date),
+                    "amount_received": self.get_amount_received(month_date)
                 })
 
             # Keep last share price updated
@@ -90,7 +90,7 @@ class SharePriceDetails(Document):
 
         # Get total amount from Issue and Reinvest transactions
         issue_result = frappe.db.sql("""
-            SELECT COALESCE(SUM(amount), 0)
+            SELECT COALESCE(SUM(amount), 0) as total
             FROM `tabShare Transaction`
             WHERE MONTH(date) = %s
             AND YEAR(date) = %s
