@@ -76,15 +76,42 @@ class SharePriceDetails(Document):
             }
         return None
 
+    # def get_amount_received(self, month_date):
+    #     month_date = getdate(month_date)
+    #     total_amount = frappe.db.sql("""
+    #         SELECT SUM(amount) FROM `tabShare Transaction`
+    #         WHERE MONTH(date) = %s AND YEAR(date) = %s
+    #     """, (month_date.month, month_date.year))
+
+    #     return total_amount[0][0] if total_amount and total_amount[0][0] else 0
+
     def get_amount_received(self, month_date):
         month_date = getdate(month_date)
-        total_amount = frappe.db.sql("""
-            SELECT SUM(amount) FROM `tabShare Transaction`
-            WHERE MONTH(date) = %s AND YEAR(date) = %s
-        """, (month_date.month, month_date.year))
 
-        return total_amount[0][0] if total_amount and total_amount[0][0] else 0
-    
+        # Get total amount from Issue and Reinvest transactions
+        issue_result = frappe.db.sql("""
+            SELECT COALESCE(SUM(amount), 0)
+            FROM `tabShare Transaction`
+            WHERE MONTH(date) = %s
+            AND YEAR(date) = %s
+            AND transfer_type IN ('Issue', 'Reinvest')
+        """, (month_date.month, month_date.year), as_dict=1)
+        issue_amount = issue_result[0].total if issue_result else 0
+
+        # Get total amount from Purchase transactions
+        purchase_result = frappe.db.sql("""
+            SELECT COALESCE(SUM(amount), 0) as total
+            FROM `tabShare Transaction`
+            WHERE MONTH(date) = %s 
+            AND YEAR(date) = %s
+            AND transfer_type = 'Purchase'
+        """, (month_date.month, month_date.year), as_dict=1)
+        purchase_amount = purchase_result[0].total if purchase_result else 0
+
+        # Calculate net amount (Issue + Reinvest - Purchase)
+        return issue_amount - purchase_amount
+
+
     def get_goodwill_amount_from_coa(self, start_date, end_date):
         """ Fetches the total Goodwill Amount from all child accounts under 'Goodwill - GH' """
         goodwill_group = "Goodwill - GH"  # Parent Group Account
