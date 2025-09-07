@@ -30,19 +30,6 @@ class ProfitDistributionDetails(Document):
         if not self.profit_account:
             frappe.throw(_("Profit Account must be selected."))
 
-    # def set_total_profit(self):
-    #     gl_entry = frappe.db.sql("""
-    #         SELECT SUM(credit) AS total_credit
-    #         FROM `tabGL Entry`
-    #         WHERE posting_date <= %s
-    #         AND account = %s
-    #         AND is_cancelled = 0
-    #     """, (self.profit_declaration_date, self.profit_account), as_dict=True)
-
-    #     total_credit = gl_entry[0].total_credit if gl_entry and gl_entry[0].total_credit else 0
-    #     if total_credit <= 0:
-    #         frappe.throw(_("No credited profit found in the selected account up to the declaration date."))
-    #     self.total_profit = total_credit
 
     def set_total_profit(self):
         gl_entry = frappe.db.sql("""
@@ -132,8 +119,9 @@ class ProfitDistributionDetails(Document):
         while current_month <= end_month:
             share_price = frappe.db.get_value("Share Price Records", {"month": current_month}, "share_price")
             if not share_price or share_price == 0:
-                current_month += relativedelta(months=1)
-                continue
+                frappe.throw(_("Share Price not found for the selected period."))
+                # current_month += relativedelta(months=1)
+                # continue
 
             total_units = 0
             member_month_units = {}
@@ -195,7 +183,7 @@ class ProfitDistributionDetails(Document):
             self.append("profit_distribution_summary", {
                 "share_member": member,
                 "total_profit": round(member_totals[member], 2), # round only final total to 2 decimals
-                "reinvest": existing_reinvest.get(member, 1)  # Preserve checkbox state
+                "reinvest": existing_reinvest.get(member, 0)  # Preserve checkbox state
             })
 
     def on_submit(self):

@@ -23,21 +23,23 @@
    "label": "Total Profit"
   },
   {
-   "default": "1",
+   "default": "0",
    "fieldname": "reinvest",
    "fieldtype": "Check",
    "label": "Reinvest"
   }
  ],
+ "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-05-31 08:37:34.351839",
+ "modified": "2025-09-07 18:04:00.934864",
  "modified_by": "Administrator",
  "module": "Share Managment",
  "name": "Profit Distribution Summary",
  "owner": "Administrator",
  "permissions": [],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": []
