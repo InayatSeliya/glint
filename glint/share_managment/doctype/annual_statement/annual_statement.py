@@ -89,36 +89,58 @@ class AnnualStatement(Document):
 				"total_profit"
 			) or 0
 
+			# Get account for this member
+			member_account = frappe.db.get_value("Share Members", share_member, "share_member_account")
+			if not member_account:
+				frappe.throw(_(f"No account linked to member {share_member}"))
+
+			# Get GL entries for this account
+			gl_entries = frappe.db.sql("""
+				SELECT 
+					COALESCE(SUM(credit), 0) as total_credit,
+					COALESCE(SUM(debit), 0) as total_debit
+				FROM `tabGL Entry`
+				WHERE 
+					account = %s
+					AND posting_date <= %s
+					AND is_cancelled = 0
+			""", (member_account, self.to_date), as_dict=1)
+
+			# Calculate total investment (Credit - Debit)
+			total_investment = flt(gl_entries[0].total_credit) - flt(gl_entries[0].total_debit)
+			
 			# Calculate total investment
-			total_investment = 0
+			# total_investment = 0
 
-			issue_reinvest = frappe.get_all(
-				"Share Transaction",
-				filters={
-					"docstatus": 1,
-					"date": ["<=", self.to_date],
-					"to_share_member": share_member,
-					"transfer_type": ["in", ["Issue", "Reinvest"]]
-				},
-				fields=["amount"]
-			)
+			# issue_reinvest = frappe.get_all(
+			# 	"Share Transaction",
+			# 	filters={
+			# 		"docstatus": 1,
+			# 		"date": ["<=", self.to_date],
+			# 		"to_share_member": share_member,
+			# 		"transfer_type": ["in", ["Issue", "Reinvest"]]
+			# 	},
+			# 	fields=["amount"]
+			# )
 
-			for tx in issue_reinvest:
-				total_investment += tx.amount or 0
+			# for tx in issue_reinvest:
+			# 	total_investment += tx.amount or 0
 
-			purchases = frappe.get_all(
-				"Share Transaction",
-				filters={
-					"docstatus": 1,
-					"date": ["<=", self.to_date],
-					"from_share_member": share_member,
-					"transfer_type": "Purchase"
-				},
-				fields=["amount"]
-			)
+			# purchases = frappe.get_all(
+			# 	"Share Transaction",
+			# 	filters={
+			# 		"docstatus": 1,
+			# 		"date": ["<=", self.to_date],
+			# 		"from_share_member": share_member,
+			# 		"transfer_type": "Purchase"
+			# 	},
+			# 	fields=["amount"]
+			# )
 
-			for tx in purchases:
-				total_investment -= tx.amount or 0
+			# for tx in purchases:
+			# 	total_investment -= tx.amount or 0
+
+
 
 			# Append row
 			self.append("share_member_summary", {
