@@ -60,30 +60,51 @@ class SharePriceDetails(Document):
         frappe.logger().info(f"Records After Before Save: {self.share_price_records}")
 
     def get_last_period_details(self, start_date):
-        """Fetch the last period's share price, goodwill price and cumulative shares."""
+        """Fetch the last period's share price, goodwill price and last non-zero cumulative shares."""
+        # First get Share Price and Goodwill Price from last record before start_date
         last_period = frappe.db.sql("""
-            SELECT share_price, goodwill_price, cumulative_shares
+            SELECT share_price, goodwill_price
             FROM `tabShare Price Records`
             WHERE month < %s 
             ORDER BY month DESC 
             LIMIT 1
         """, (start_date,), as_dict=True)
 
+        # Separately get the last non-zero cumulative shares
+        last_nonzero_shares = frappe.db.sql("""
+            SELECT cumulative_shares
+            FROM `tabShare Price Records`
+            WHERE month < %s 
+            AND cumulative_shares > 0
+            ORDER BY month DESC 
+            LIMIT 1
+        """, (start_date,), as_dict=True)
+
         if last_period:
             return {
-                'total_price': last_period[0]["share_price"] + last_period[0]["goodwill_price"],
-                'cumulative_shares': last_period[0]["cumulative_shares"] or 0
+                'total_price': flt(last_period[0].get("share_price", 0)) + flt(last_period[0].get("goodwill_price", 0)),
+                'cumulative_shares': flt(last_nonzero_shares[0].get("cumulative_shares", 0)) if last_nonzero_shares else 0
             }
         return None
 
-    # def get_amount_received(self, month_date):
-    #     month_date = getdate(month_date)
-    #     total_amount = frappe.db.sql("""
-    #         SELECT SUM(amount) FROM `tabShare Transaction`
-    #         WHERE MONTH(date) = %s AND YEAR(date) = %s
-    #     """, (month_date.month, month_date.year))
+    # def get_last_period_details(self, start_date):
+    #     """Fetch the last period's share price, goodwill price and cumulative shares."""
+    #     last_period = frappe.db.sql("""
+    #         SELECT share_price, goodwill_price, cumulative_shares
+    #         FROM `tabShare Price Records`
+    #         WHERE month < %s 
+    #         ORDER BY month DESC 
+    #         LIMIT 1
+    #     """, (start_date,), as_dict=True)
 
-    #     return total_amount[0][0] if total_amount and total_amount[0][0] else 0
+    #     if last_period:
+    #         return {
+    #             'total_price': last_period[0]["share_price"] + last_period[0]["goodwill_price"],
+    #             'cumulative_shares': last_period[0]["cumulative_shares"] or 0
+    #         }
+    #     return None
+
+
 
     def get_amount_received(self, month_date):
         month_date = getdate(month_date)
