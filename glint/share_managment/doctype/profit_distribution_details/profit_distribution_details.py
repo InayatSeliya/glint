@@ -203,6 +203,7 @@ class ProfitDistributionDetails(Document):
 
                 transaction = frappe.get_doc({
                     "doctype": "Share Transaction",
+                    "naming_series": "ShTr-####",  # Add this line to specify naming series
                     "transfer_type": "Reinvest",
                     "date": self.profit_declaration_date,
                     "journal_entry": 1,
