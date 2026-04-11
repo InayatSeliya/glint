@@ -3,10 +3,14 @@
 
 import frappe
 from frappe.model.document import Document
+from frappe.model.naming import make_autoname
 from frappe.utils import getdate
 
 
 class ShareTransaction(Document):
+    def autoname(self):
+        self.name = make_autoname("ShTr-.####")
+
     def before_save(self):
         pass
         # self.no_of_shares = self.amount / self.rate

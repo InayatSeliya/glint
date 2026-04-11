@@ -3,6 +3,7 @@
 
 import frappe
 from frappe.model.document import Document
+from frappe.model.naming import make_autoname
 from frappe.utils import get_first_day, get_last_day
 from frappe import _
 from dateutil.relativedelta import relativedelta
@@ -201,19 +202,30 @@ class ProfitDistributionDetails(Document):
 
                 share_member_account = frappe.db.get_value("Share Members", member, "share_member_account")
 
-                transaction = frappe.get_doc({
-                    "doctype": "Share Transaction",
-                    "naming_series": "ShTr-####",  # Add this line to specify naming series
+                # Check if transaction already exists
+                existing_transaction = frappe.db.exists("Share Transaction", {
                     "transfer_type": "Reinvest",
-                    "date": self.profit_declaration_date,
-                    "journal_entry": 1,
                     "to_share_member": member,
-                    "equityliability_account": share_member_account,
-                    "asset_account": "Profit Declared - GH",
+                    "date": self.profit_declaration_date,
                     "amount": profit_amount,
                     "remarks": f"Profit Reinvested from distribution {self.name}"
                 })
-                transaction.insert(ignore_permissions=True)
+
+                if not existing_transaction:
+                    transaction = frappe.get_doc({
+                        "doctype": "Share Transaction",
+                        "name": make_autoname("ShTr-.####"),
+                        "naming_series": "ShTr-.####",
+                        "transfer_type": "Reinvest",
+                        "date": self.profit_declaration_date,
+                        "journal_entry": 1,
+                        "to_share_member": member,
+                        "equityliability_account": share_member_account,
+                        "asset_account": "Profit Declared - GH",
+                        "amount": profit_amount,
+                        "remarks": f"Profit Reinvested from distribution {self.name}"
+                    })
+                    transaction.insert(ignore_permissions=True)
             else:
                 total_withdraw_amount += profit_amount
                 withdraw_details.append(f"{member}: ₹{profit_amount}")

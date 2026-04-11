@@ -1,11 +1,12 @@
 {
  "actions": [],
  "allow_import": 1,
- "autoname": "format:{ShTr}-{####}",
+ "autoname": "naming_series:",
  "creation": "2024-09-17 23:12:30.348000",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "naming_series",
   "transfer_type",
   "column_break_qxab",
   "date",
@@ -28,6 +29,13 @@
   "remarks"
  ],
  "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Series",
+   "options": "ShTr-.####",
+   "reqd": 1
+  },
   {
    "fieldname": "transfer_type",
    "fieldtype": "Select",
