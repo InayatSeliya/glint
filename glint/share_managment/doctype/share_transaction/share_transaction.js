@@ -1,63 +1,50 @@
 // Copyright (c) 2024, Inayatali Seliya and contributors
 // For license information, please see license.txt
 
-// frappe.ui.form.on('Share Transaction', {
-//     on_submit: function(frm) {
-//         // Prepare account entries based on transfer type
-//         let accounts = [];
+frappe.ui.form.on("Share Transaction", {
+	// Auto-fetch when To Share Member is selected
+	to_share_member: function(frm) {
+		if (frm.doc.to_share_member) {
+			// Fetch Share Member document to get the Share Member Account
+			frappe.call({
+				method: 'frappe.client.get',
+				args: {
+					doctype: 'Share Members',
+					name: frm.doc.to_share_member
+				},
+				callback: function(response) {
+					if (response.message) {
+						const share_member = response.message;
+						// Set Equity/Liability Account from Share Member's account
+						frm.set_value('equityliability_account', share_member.share_member_account);
+						// Set Asset Account to 'Cash - GH'
+						frm.set_value('asset_account', 'Cash - GH');
+					}
+				}
+			});
+		}
+	},
 
-//         // Determine debit and credit accounts based on transfer type
-//         if (frm.doc.transfer_type === 'Issue' || frm.doc.transfer_type === 'Purchase') {
-//             accounts.push({
-//                 account: frm.doc.asset_account, // Debit account
-//                 debit_in_account_currency: frm.doc.amount,
-//                 credit_in_account_currency: 0
-//             });
-
-//             accounts.push({
-//                 account: frm.doc.equityliability_account, // Credit account
-//                 debit_in_account_currency: 0,
-//                 credit_in_account_currency: frm.doc.amount
-//             });
-//         } else if (frm.doc.transfer_type === 'Transfer') {
-//             // Implement transfer logic if needed, e.g., debit and credit can be the same account
-//             accounts.push({
-//                 account: frm.doc.asset_account, // Debit account
-//                 debit_in_account_currency: frm.doc.amount,
-//                 credit_in_account_currency: 0
-//             });
-
-//             accounts.push({
-//                 account: frm.doc.equityliability_account, // Credit account
-//                 debit_in_account_currency: 0,
-//                 credit_in_account_currency: frm.doc.amount
-//             });
-//         }
-
-//         // Create a new Journal Entry
-//         frappe.call({
-//             method: 'frappe.client.insert',
-//             args: {
-//                 doc: {
-//                     doctype: 'Journal Entry',
-//                     voucher_type: 'Journal Entry',
-//                     posting_date: frm.doc.date,
-//                     company: frm.doc.company, // Ensure the company is set correctly
-//                     accounts: accounts
-//                 }
-//             },
-//             callback: function(response) {
-//                 if (response.message) {
-//                     frappe.msgprint(__('Journal Entry created successfully in darft mode: {0}', [response.message.name]));
-//                 }
-//             }
-//         });
-//     }
-// });
-
-
-// frappe.ui.form.on("Share Transaction", {
-// 	refresh(frm) {
-
-// 	},
-// });
+	// Auto-fetch when From Share Member is selected
+	from_share_member: function(frm) {
+		if (frm.doc.from_share_member) {
+			// Fetch Share Member document to get the Share Member Account
+			frappe.call({
+				method: 'frappe.client.get',
+				args: {
+					doctype: 'Share Members',
+					name: frm.doc.from_share_member
+				},
+				callback: function(response) {
+					if (response.message) {
+						const share_member = response.message;
+						// Set Equity/Liability Account to 'Cash - GH'
+						frm.set_value('equityliability_account', 'Cash - GH');
+						// Set Asset Account from Share Member's account
+						frm.set_value('asset_account', share_member.share_member_account);
+					}
+				}
+			});
+		}
+	}
+});
