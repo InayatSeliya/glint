@@ -221,7 +221,7 @@ class ProfitDistributionDetails(Document):
                         "journal_entry": 1,
                         "to_share_member": member,
                         "equityliability_account": share_member_account,
-                        "asset_account": "Profit Declared - GH",
+                        "asset_account": "Cash - GH",
                         "amount": profit_amount,
                         "remarks": f"Profit Reinvested from distribution {self.name}"
                     })
