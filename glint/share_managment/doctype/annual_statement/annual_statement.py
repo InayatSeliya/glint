@@ -82,12 +82,18 @@ class AnnualStatement(Document):
 			# Share value = units × total_share_price
 			share_value = units * total_share_price
 
-			# Get total profit for this member
-			profit = frappe.get_value(
-				"Profit Distribution Summary",
-				{"share_member": share_member},
-				"total_profit"
-			) or 0
+			# Get total profit for this member from the Profit Distribution Details for this period
+			profit_row = frappe.db.sql("""
+				SELECT pds.total_profit
+				FROM `tabProfit Distribution Summary` pds
+				JOIN `tabProfit Distribution Details` pdd ON pds.parent = pdd.name
+				WHERE pds.share_member = %s
+					AND pdd.start_date >= %s
+					AND pdd.end_date <= %s
+				LIMIT 1
+			""", (share_member, self.from_date, self.to_date), as_dict=True)
+			
+			profit = profit_row[0].total_profit if profit_row else 0
 
 			# Get account for this member
 			member_account = frappe.db.get_value("Share Members", share_member, "share_member_account")
