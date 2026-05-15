@@ -184,7 +184,7 @@ class ProfitDistributionDetails(Document):
             self.append("profit_distribution_summary", {
                 "share_member": member,
                 "total_profit": round(member_totals[member], 2), # round only final total to 2 decimals
-                "reinvest": existing_reinvest.get(member, 0)  # Preserve checkbox state
+                "reinvest": existing_reinvest.get(member, 1)  # Default to reinvest checked
             })
 
     def on_submit(self):
@@ -223,7 +223,8 @@ class ProfitDistributionDetails(Document):
                         "equityliability_account": share_member_account,
                         "asset_account": "Cash - GH",
                         "amount": profit_amount,
-                        "remarks": f"Profit Reinvested from distribution {self.name}"
+                        "remarks": f"Profit Reinvested from distribution {self.name}",
+                        "company": frappe.defaults.get_user_default("company")
                     })
                     transaction.insert(ignore_permissions=True)
             else:

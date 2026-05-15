@@ -12,7 +12,9 @@ class ShareTransaction(Document):
         self.name = make_autoname("ShTr-.####")
 
     def before_save(self):
-        pass
+        if self.amount is None or self.amount < 1:
+            frappe.throw("Amount must be at least 1.")
+
         # self.no_of_shares = self.amount / self.rate
 
         # Disable Journal Entry for Reinvest
@@ -42,7 +44,7 @@ class ShareTransaction(Document):
         accounts = []
 
         # Determine debit and credit accounts based on transfer type
-        if self.transfer_type in ['Issue', 'Purchase']:
+        if self.transfer_type in ['Issue', 'Purchase', 'Reinvest']:
             accounts.append({
                 'account': self.asset_account,  # Debit account
                 'debit_in_account_currency': self.amount,

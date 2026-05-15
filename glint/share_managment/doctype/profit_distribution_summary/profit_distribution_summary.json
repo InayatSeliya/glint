@@ -23,7 +23,7 @@
    "label": "Total Profit"
   },
   {
-   "default": "0",
+   "default": "1",
    "fieldname": "reinvest",
    "fieldtype": "Check",
    "label": "Reinvest"
